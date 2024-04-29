@@ -1,7 +1,39 @@
 <script setup lang="ts">
+import { Bar } from 'vue-chartjs';
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Colors,
+  Legend,
+  LinearScale,
+  Title,
+  Tooltip
+} from 'chart.js';
+import { ref } from 'vue';
+
+ChartJS.register(
+  Title,
+  Colors,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
+
 defineProps<{
   msg: string;
 }>();
+
+const chartData = ref({
+  labels: ['January', 'February', 'March'],
+  datasets: [{ data: [40, 20, 12] }, { data: [90, 30, 32] }]
+});
+
+const chartOptions = ref({
+  responsive: true
+});
 </script>
 
 <template>
@@ -14,6 +46,7 @@ defineProps<{
     <VaButton color="warning" icon="self_improvement" class="mx-10"
       >Click me</VaButton
     >
+    <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
     <h3>
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
