@@ -50,7 +50,7 @@ jobs:
           node-version: 20
       - run: npm install --frozen-lockfile
       - name: Build project
-        run: npm run build
+        run: npm run build-only
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
