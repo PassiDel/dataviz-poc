@@ -5,7 +5,7 @@ import { RouterLink, RouterView } from 'vue-router';
 <template>
   <VaLayout :top="{ fixed: true, order: 2 }">
     <template #top>
-      <VaNavbar color="secondary">
+      <VaNavbar color="info">
         <template #left>
           <img alt="HSB logo" src="@/assets/hsb.png" class="m-[-20px] h-32" />
         </template>
