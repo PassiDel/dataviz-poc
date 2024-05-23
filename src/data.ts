@@ -77,3 +77,47 @@ const dsbw = {
     }
   ]
 } satisfies DegreeData;
+
+// TODO: get from data
+export const faculties = [
+  {
+    name: 'Fakultät 1',
+    number: 1,
+    degrees: [
+      { name: 'AAA B.Sc.', slug: '1aaa' },
+      { name: 'BBB M.Sc.', slug: '1bbb' }
+    ]
+  },
+  {
+    name: 'Fakultät 2',
+    number: 2,
+    degrees: [
+      { name: 'AAA B.Sc.', slug: '2aaa' },
+      { name: 'BBB M.Sc.', slug: '2bbb' }
+    ]
+  },
+  {
+    name: 'Fakultät 3',
+    number: 3,
+    degrees: [
+      { name: 'AAA B.Sc.', slug: '3aaa' },
+      { name: 'BBB M.Sc.', slug: '3bbb' }
+    ]
+  },
+  {
+    name: 'Fakultät 4',
+    number: 4,
+    degrees: [
+      { name: 'AAA B.Sc.', slug: '4aaa' },
+      { name: 'BBB M.Sc.', slug: '4bbb' }
+    ]
+  },
+  {
+    name: 'Fakultät 5',
+    number: 5,
+    degrees: [
+      { name: 'AAA B.Sc.', slug: '5aaa' },
+      { name: 'BBB M.Sc.', slug: '5bbb' }
+    ]
+  }
+];

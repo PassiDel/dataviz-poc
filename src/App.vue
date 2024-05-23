@@ -1,29 +1,28 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
-import HelloWorld from './components/HelloWorld.vue';
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <VaLayout :top="{ fixed: true, order: 2 }">
+    <template #top>
+      <VaNavbar color="secondary">
+        <template #left>
+          <img alt="HSB logo" src="@/assets/hsb.png" class="m-[-20px] h-32" />
+        </template>
+        <template #right>
+          <div class="flex gap-4">
+            <RouterLink to="/">Home</RouterLink>
+            <RouterLink to="/compare">Vergleich</RouterLink>
+            <RouterLink to="/faculty">Fakultäten</RouterLink>
+            <RouterLink to="/university">Ganze Hochschule</RouterLink>
+          </div>
+        </template>
+      </VaNavbar>
+    </template>
+    <template #content>
+      <RouterView />
+    </template>
+  </VaLayout>
 </template>
 
 <style scoped></style>
