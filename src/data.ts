@@ -43,7 +43,6 @@ export type DegreeData = {
 
 // Example
 
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */ //noinspection JSUnusedLocalSymbols
 const dsbw = {
   name: 'DS Betriebswirtschaft BA',
   short: 'DSBW BA',
@@ -100,8 +99,41 @@ const dsbw = {
     }
   ]
 } satisfies DegreeData;
+const mi = {
+  name: 'IS Medieninformatik BSc',
+  short: 'ISMI BSc',
+  faculty: 4,
+  fak: '4',
+  campus: 'ZI',
+  number: 998,
+  type: 'Bachelor',
+  semester: [
+    {
+      semester: 'WiSe 2023',
+      data: {
+        total: 310,
+        totalGerman: 267,
+        maleGerman: 209,
+        femaleGerman: 57,
+        diverseGerman: 1,
+        totalForeign: 43,
+        maleForeign: 30,
+        femaleForeign: 13,
+        diverseForeign: 0,
+        totalPause: 3,
+        malePause: 3,
+        femalePause: 0,
+        diversePause: 0,
+        totalBeginner: 70,
+        maleBeginner: 53,
+        femaleBeginner: 16,
+        diverseBeginner: 1
+      }
+    }
+  ]
+} satisfies DegreeData;
 
-export const degrees: DegreeData[] = [dsbw];
+export const degrees: DegreeData[] = [dsbw, mi];
 
 export const faculties = degrees.reduce(
   (ff, d) => {
@@ -136,3 +168,17 @@ export const faculties = degrees.reduce(
     }
   ] as { name: string; number: number; degrees: DegreeData[] }[]
 );
+
+export const campus = {
+  WS: 'Werderstraße',
+  IG: 'IGC',
+  ZI: 'ZIMT',
+  NW: 'Neustadtswall'
+} as const;
+
+export function campusMap(short: string) {
+  if (short in campus) {
+    return campus[short as keyof typeof campus];
+  }
+  return campus.NW;
+}

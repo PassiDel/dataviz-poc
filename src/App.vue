@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
-  <VaLayout :top="{ fixed: true, order: 2 }">
+  <VaLayout :top="{ fixed: true, order: 2 }" class="h-dvh">
     <template #top>
       <VaNavbar color="secondary">
         <template #left>

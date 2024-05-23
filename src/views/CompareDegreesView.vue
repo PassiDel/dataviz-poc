@@ -20,17 +20,13 @@ const rightDegree = computed(() =>
 </script>
 
 <template>
-  <main class="grid grid-cols-6 gap-3 p-3">
+  <main class="grid h-full grid-cols-6 gap-3 p-3">
     <DataSelect v-model:selected="selectedLeft" />
-    <CompareDegree v-if="leftDegree" :degree="leftDegree" class="col-span-2" />
+    <CompareDegree v-if="leftDegree" :degree="leftDegree" class="degree" />
     <div v-else class="col-span-2">
       <h2>Wähle links einen Studiengang aus!</h2>
     </div>
-    <CompareDegree
-      v-if="rightDegree"
-      :degree="rightDegree"
-      class="col-span-2"
-    />
+    <CompareDegree v-if="rightDegree" :degree="rightDegree" class="degree" />
     <div v-else class="col-span-2">
       <h2>Wähle rechts einen Studiengang aus!</h2>
     </div>
@@ -41,5 +37,9 @@ const rightDegree = computed(() =>
 <style scoped>
 h2 {
   @apply text-center text-2xl;
+}
+
+.degree {
+  @apply col-span-2 rounded-2xl bg-gray-200 p-2 px-3;
 }
 </style>
