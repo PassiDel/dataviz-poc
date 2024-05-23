@@ -9,13 +9,13 @@ const { selectedLeft, selectedRight } = useQuery();
 
 const leftDegree = computed(() =>
   faculties
-    .flatMap(({ degrees, ...f }) => degrees.map((d) => ({ ...d, faculty: f })))
-    .find((d) => d.slug === selectedLeft.value)
+    .flatMap(({ degrees, ...f }) => degrees.map((d) => ({ ...d, f })))
+    .find((d) => d.number === selectedLeft.value)
 );
 const rightDegree = computed(() =>
   faculties
-    .flatMap(({ degrees, ...f }) => degrees.map((d) => ({ ...d, faculty: f })))
-    .find((d) => d.slug === selectedRight.value)
+    .flatMap(({ degrees, ...f }) => degrees.map((d) => ({ ...d, f })))
+    .find((d) => d.number === selectedRight.value)
 );
 </script>
 

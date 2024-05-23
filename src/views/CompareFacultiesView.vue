@@ -7,10 +7,10 @@ import { useQuery } from '@/composables/useQuery';
 
 const { selectedLeft, selectedRight } = useQuery();
 const leftFaculty = computed(() =>
-  faculties.find((f) => f.name === selectedLeft.value)
+  faculties.find((f) => f.number === selectedLeft.value)
 );
 const rightFaculty = computed(() =>
-  faculties.find((f) => f.name === selectedRight.value)
+  faculties.find((f) => f.number === selectedRight.value)
 );
 </script>
 

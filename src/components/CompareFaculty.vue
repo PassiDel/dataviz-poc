@@ -1,10 +1,8 @@
 <script setup lang="ts">
+import type { faculties } from '@/data';
+
 const { faculty } = defineProps<{
-  faculty: {
-    name: string;
-    number: number;
-    degrees: { name: string; slug: string }[];
-  };
+  faculty: (typeof faculties)[0];
 }>();
 </script>
 

@@ -53,8 +53,9 @@ const dsbw = {
   number: 714,
   type: 'Bachelor',
   semester: [
+    // TODO: this is fake data
     {
-      semester: 'WiSe 2023',
+      semester: 'WiSe 2022',
       data: {
         total: 87,
         totalGerman: 86,
@@ -74,50 +75,64 @@ const dsbw = {
         femaleBeginner: 14,
         diverseBeginner: 0
       }
+    },
+    {
+      semester: 'WiSe 2023',
+      data: {
+        total: 77,
+        totalGerman: 76,
+        maleGerman: 39,
+        femaleGerman: 37,
+        diverseGerman: 0,
+        totalForeign: 1,
+        maleForeign: 1,
+        femaleForeign: 0,
+        diverseForeign: 0,
+        totalPause: 0,
+        malePause: 0,
+        femalePause: 0,
+        diversePause: 0,
+        totalBeginner: 27,
+        maleBeginner: 13,
+        femaleBeginner: 14,
+        diverseBeginner: 0
+      }
     }
   ]
 } satisfies DegreeData;
 
-// TODO: get from data
-export const faculties = [
-  {
-    name: 'Fakultät 1',
-    number: 1,
-    degrees: [
-      { name: 'AAA B.Sc.', slug: '1aaa' },
-      { name: 'BBB M.Sc.', slug: '1bbb' }
-    ]
+export const degrees: DegreeData[] = [dsbw];
+
+export const faculties = degrees.reduce(
+  (ff, d) => {
+    ff.find((fac) => fac.number === d.faculty)?.degrees.push(d);
+    return ff;
   },
-  {
-    name: 'Fakultät 2',
-    number: 2,
-    degrees: [
-      { name: 'AAA B.Sc.', slug: '2aaa' },
-      { name: 'BBB M.Sc.', slug: '2bbb' }
-    ]
-  },
-  {
-    name: 'Fakultät 3',
-    number: 3,
-    degrees: [
-      { name: 'AAA B.Sc.', slug: '3aaa' },
-      { name: 'BBB M.Sc.', slug: '3bbb' }
-    ]
-  },
-  {
-    name: 'Fakultät 4',
-    number: 4,
-    degrees: [
-      { name: 'AAA B.Sc.', slug: '4aaa' },
-      { name: 'BBB M.Sc.', slug: '4bbb' }
-    ]
-  },
-  {
-    name: 'Fakultät 5',
-    number: 5,
-    degrees: [
-      { name: 'AAA B.Sc.', slug: '5aaa' },
-      { name: 'BBB M.Sc.', slug: '5bbb' }
-    ]
-  }
-];
+  [
+    {
+      name: 'Fakultät 1',
+      number: 1,
+      degrees: []
+    },
+    {
+      name: 'Fakultät 2',
+      number: 2,
+      degrees: []
+    },
+    {
+      name: 'Fakultät 3',
+      number: 3,
+      degrees: []
+    },
+    {
+      name: 'Fakultät 4',
+      number: 4,
+      degrees: []
+    },
+    {
+      name: 'Fakultät 5',
+      number: 5,
+      degrees: []
+    }
+  ] as { name: string; number: number; degrees: DegreeData[] }[]
+);

@@ -5,14 +5,22 @@ export function useQuery() {
   const route = useRoute();
   const router = useRouter();
 
-  const selectedLeft = ref('');
-  if (route.query.left && typeof route.query.left === 'string') {
-    selectedLeft.value = route.query.left;
+  const selectedLeft = ref(0);
+  if (
+    route.query.left &&
+    typeof route.query.left === 'string' &&
+    !isNaN(parseInt(route.query.left))
+  ) {
+    selectedLeft.value = parseInt(route.query.left);
   }
 
-  const selectedRight = ref('');
-  if (route.query.right && typeof route.query.right === 'string') {
-    selectedRight.value = route.query.right;
+  const selectedRight = ref(0);
+  if (
+    route.query.right &&
+    typeof route.query.right === 'string' &&
+    !isNaN(parseInt(route.query.right))
+  ) {
+    selectedRight.value = parseInt(route.query.right);
   }
 
   function updateQuery() {

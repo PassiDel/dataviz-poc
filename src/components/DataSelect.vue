@@ -12,7 +12,7 @@ const { hideDegrees, right } = withDefaults(
   }
 );
 
-const selected = defineModel('selected', { default: '' });
+const selected = defineModel('selected', { default: 0 });
 </script>
 
 <template>
@@ -21,9 +21,12 @@ const selected = defineModel('selected', { default: '' });
       <a
         href="#"
         v-if="hideDegrees"
-        @click.prevent="() => (selected = faculty.name)"
+        @click.prevent="() => (selected = faculty.number)"
       >
-        <h3 class="font-bold" :class="{ underline: selected === faculty.name }">
+        <h3
+          class="font-bold"
+          :class="{ underline: selected === faculty.number }"
+        >
           {{ faculty.name }}
         </h3></a
       >
@@ -34,11 +37,11 @@ const selected = defineModel('selected', { default: '' });
           <a
             href="#"
             v-if="!hideDegrees"
-            @click.prevent="() => (selected = degree.slug)"
+            @click.prevent="() => (selected = degree.number)"
           >
             <h4
               :class="{
-                underline: selected === degree.slug,
+                underline: selected === degree.number,
                 'pl-2': !right,
                 'pr-3': right
               }"

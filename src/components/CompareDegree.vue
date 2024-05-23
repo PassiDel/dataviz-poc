@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { DegreeData } from '@/data';
+
 const { degree } = defineProps<{
-  degree: {
-    faculty: { name: string; number: number };
-    name: string;
-    slug: string;
+  degree: DegreeData & {
+    f: { name: string; number: number };
   };
 }>();
 </script>
@@ -11,7 +11,7 @@ const { degree } = defineProps<{
 <template>
   <div>
     <h2>{{ degree.name }}</h2>
-    <h3>{{ degree.faculty.name }}</h3>
+    <h3>{{ degree.f.name }}</h3>
   </div>
 </template>
 
