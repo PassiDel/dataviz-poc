@@ -5,7 +5,7 @@ const totalDegrees = faculties.flatMap((f) => f.degrees).length;
 </script>
 
 <template>
-  <main class="grid grid-cols-3 gap-3 p-3">
+  <main class="grid gap-3 p-3 md:grid-cols-3">
     <div class="col-start-2">
       <img alt="HSB logo" src="@/assets/hsb.png" class="mx-auto h-48" />
       <h2>{{ faculties.length }} Fakultäten</h2>

@@ -7,10 +7,14 @@ import { RouterLink, RouterView } from 'vue-router';
     <template #top>
       <VaNavbar color="secondary">
         <template #left>
-          <img alt="HSB logo" src="@/assets/hsb.png" class="m-[-20px] h-32" />
+          <img
+            alt="HSB logo"
+            src="@/assets/hsb.png"
+            class="m-[-20px] md:h-32"
+          />
         </template>
         <template #right>
-          <div class="flex gap-4">
+          <div class="flex flex-col gap-4 md:flex-row">
             <RouterLink to="/">Home</RouterLink>
             <RouterLink to="/compare">Vergleich</RouterLink>
             <RouterLink to="/faculty">Fakultäten</RouterLink>

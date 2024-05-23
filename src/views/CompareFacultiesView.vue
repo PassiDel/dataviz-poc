@@ -15,7 +15,7 @@ const rightFaculty = computed(() =>
 </script>
 
 <template>
-  <main class="grid grid-cols-6 gap-3 p-3">
+  <main class="flex h-full grid-cols-6 flex-col gap-3 p-3 md:grid">
     <DataSelect v-model:selected="selectedLeft" hide-degrees />
     <CompareFaculty
       v-if="leftFaculty"
@@ -25,6 +25,7 @@ const rightFaculty = computed(() =>
     <div v-else class="col-span-2">
       <h2>Wähle links eine Fakultät aus!</h2>
     </div>
+    <hr class="my-4 border-2 border-primary md:hidden" />
     <CompareFaculty
       v-if="rightFaculty"
       :faculty="rightFaculty"
