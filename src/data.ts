@@ -182,3 +182,34 @@ export function campusMap(short: string) {
   }
   return campus.NW;
 }
+
+export const categoryMap: { [k in SemesterDataCategories]: string } = {
+  total: 'Insgesamt',
+  totalGerman: 'Insgesamt Deutsch',
+  maleGerman: 'Deutsch Männlich',
+  femaleGerman: 'Deutsch Weiblich',
+  diverseGerman: 'Deutsch Divers',
+  totalForeign: 'Insgesamt Ausländisch',
+  maleForeign: 'Ausländisch Männlich',
+  femaleForeign: 'Ausländisch Weiblich',
+  diverseForeign: 'Ausländisch Divers',
+  totalPause: 'Insgesamt Urlaub',
+  malePause: 'Urlaub Männlich',
+  femalePause: 'Urlaub Weiblich',
+  diversePause: 'Urlaub Divers',
+  totalBeginner: 'Insgesamt StuAnf',
+  maleBeginner: 'StuAnf Männlich',
+  femaleBeginner: 'StuAnf Weiblich',
+  diverseBeginner: 'StuAnf Divers'
+};
+export const degreeKeyMap: {
+  [k in keyof Omit<DegreeData, 'semester'>]: string;
+} = {
+  number: 'Nummer',
+  name: 'Name',
+  short: 'Kurz',
+  faculty: 'Fakultät',
+  fak: '(Sub-)Fakultät',
+  campus: 'Campus',
+  type: 'Art'
+};
