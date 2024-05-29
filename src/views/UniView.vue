@@ -48,7 +48,7 @@ const sum = degrees
       <h2>{{ faculties.length }} Fakultäten</h2>
       <ul class="ml-8 list-disc">
         <li v-for="fk in degreePerFaculty" :key="fk.faculty">
-          Fakultät {{ fk.faculty }}: {{ fk.amount }}
+          Fakultät {{ fk.faculty }}: {{ fk.amount }} Studiengänge
         </li>
       </ul>
       <h2 class="mt-3">{{ totalDegrees }} Studiengänge</h2>

@@ -26,7 +26,7 @@ const { degree } = defineProps<{
       <p>Fakultät {{ degree.f.number }}</p>
       <p>Standort: {{ campusMap(degree.campus) || '' }}</p>
       <p>
-        {{ degree.semester.length }} Jahre Daten
+        {{ degree.semester.length }} Semester Daten
         <span v-if="degree.semester.length > 1"
           >({{ degree.semester[degree.semester.length - 1].semester }} -
           {{ degree.semester[0].semester }})</span
