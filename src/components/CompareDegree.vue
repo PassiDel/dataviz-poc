@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { campusMap, type DegreeData } from '@/data';
 import GenderNationality from '@/components/charts/GenderNationality.vue';
+import RadarYears from '@/components/charts/RadarYears.vue';
 
 const { degree } = defineProps<{
   degree: DegreeData & {
@@ -41,6 +42,7 @@ const { degree } = defineProps<{
     </div>
     <hr class="h-0.5 bg-primary" />
     <GenderNationality :degree="degree" />
+    <RadarYears :degree="degree" />
   </div>
 </template>
 
