@@ -5,18 +5,18 @@ import { faculties } from '@/data';
 import CompareFaculty from '@/components/CompareFaculty.vue';
 import { useQuery } from '@/composables/useQuery';
 
-const { selectedLeft, selectedRight } = useQuery();
+const { left, right } = useQuery({ left: 0, right: 0 });
 const leftFaculty = computed(() =>
-  faculties.find((f) => f.number === selectedLeft.value)
+  faculties.find((f) => f.number === left.value)
 );
 const rightFaculty = computed(() =>
-  faculties.find((f) => f.number === selectedRight.value)
+  faculties.find((f) => f.number === right.value)
 );
 </script>
 
 <template>
   <main class="flex h-full grid-cols-6 flex-col gap-3 p-3 md:grid">
-    <DataSelect v-model:selected="selectedLeft" hide-degrees />
+    <DataSelect v-model:selected="left" hide-degrees />
     <CompareFaculty
       v-if="leftFaculty"
       :faculty="leftFaculty"
@@ -34,7 +34,7 @@ const rightFaculty = computed(() =>
     <div v-else class="col-span-2">
       <h2>Wähle rechts eine Fakultät aus!</h2>
     </div>
-    <DataSelect v-model:selected="selectedRight" hide-degrees right />
+    <DataSelect v-model:selected="right" hide-degrees right />
   </main>
 </template>
 

@@ -5,23 +5,23 @@ import { faculties } from '@/data';
 import CompareDegree from '@/components/CompareDegree.vue';
 import { useQuery } from '@/composables/useQuery';
 
-const { selectedLeft, selectedRight } = useQuery();
+const { left, right } = useQuery({ left: 0, right: 0 });
 
 const leftDegree = computed(() =>
   faculties
     .flatMap(({ degrees, ...f }) => degrees.map((d) => ({ ...d, f })))
-    .find((d) => d.number === selectedLeft.value)
+    .find((d) => d.number === left.value)
 );
 const rightDegree = computed(() =>
   faculties
     .flatMap(({ degrees, ...f }) => degrees.map((d) => ({ ...d, f })))
-    .find((d) => d.number === selectedRight.value)
+    .find((d) => d.number === right.value)
 );
 </script>
 
 <template>
   <main class="flex h-full grid-cols-6 flex-col gap-3 p-3 md:grid">
-    <DataSelect v-model:selected="selectedLeft" />
+    <DataSelect v-model:selected="left" />
     <CompareDegree v-if="leftDegree" :degree="leftDegree" class="degree" />
     <div v-else class="col-span-2">
       <h2>Wähle links einen Studiengang aus!</h2>
@@ -31,7 +31,7 @@ const rightDegree = computed(() =>
     <div v-else class="col-span-2">
       <h2>Wähle rechts einen Studiengang aus!</h2>
     </div>
-    <DataSelect v-model:selected="selectedRight" right />
+    <DataSelect v-model:selected="right" right />
   </main>
 </template>
 

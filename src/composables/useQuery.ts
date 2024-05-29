@@ -1,36 +1,45 @@
 import { useRoute, useRouter } from 'vue-router';
-import { ref, watch } from 'vue';
+import { type Ref, ref, watch } from 'vue';
 
-export function useQuery() {
+export function useQuery<Keys extends Record<string, string | number>>(
+  key: Keys
+): { [k in keyof Keys]: Ref<Keys[k]> } {
   const route = useRoute();
   const router = useRouter();
 
-  const selectedLeft = ref(0);
-  if (
-    route.query.left &&
-    typeof route.query.left === 'string' &&
-    !isNaN(parseInt(route.query.left))
-  ) {
-    selectedLeft.value = parseInt(route.query.left);
-  }
+  const selected = Object.fromEntries(
+    Object.entries(key).map(([k, v]) => [k, ref(v)])
+  ) as { [k in keyof Keys]: Ref<Keys[k]> };
 
-  const selectedRight = ref(0);
-  if (
-    route.query.right &&
-    typeof route.query.right === 'string' &&
-    !isNaN(parseInt(route.query.right))
-  ) {
-    selectedRight.value = parseInt(route.query.right);
-  }
+  Object.entries(key).forEach(([_k, v]) => {
+    const k = _k as keyof Keys;
 
-  function updateQuery() {
-    router.push({
+    if (
+      _k in route.query &&
+      typeof route.query[_k] === 'string' &&
+      (typeof v === 'number'
+        ? !isNaN(parseInt(route.query[_k] as string))
+        : true)
+    ) {
+      selected[k].value = (
+        typeof v === 'number'
+          ? parseInt(route.query[_k] as string)
+          : route.query[_k]
+      ) as Keys[typeof k];
+    }
+    watch(selected[k], updateQuery);
+  });
+
+  async function updateQuery() {
+    return router.push({
       path: route.path,
-      query: { left: selectedLeft.value, right: selectedRight.value }
+      query: Object.fromEntries(
+        Object.entries(selected)
+          .map(([k, v]) => [k, v.value])
+          .filter((e) => !!e[1])
+      )
     });
   }
-  watch(selectedLeft, updateQuery);
-  watch(selectedRight, updateQuery);
 
-  return { selectedLeft, selectedRight };
+  return selected;
 }
