@@ -30,6 +30,11 @@ const router = createRouter({
       path: '/university',
       name: 'university',
       component: () => import('../views/UniView.vue')
+    },
+    {
+      path: '/graph',
+      name: 'graph',
+      component: () => import('../views/GraphView.vue')
     }
   ]
 });
