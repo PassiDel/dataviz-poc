@@ -27,17 +27,16 @@ const { degree } = defineProps<{
       <p>
         {{ degree.semester.length }} Jahre Daten
         <span v-if="degree.semester.length > 1"
-          >({{ degree.semester[0].semester }} -
-          {{ degree.semester[degree.semester.length - 1].semester }})</span
+          >({{ degree.semester[degree.semester.length - 1].semester }} -
+          {{ degree.semester[0].semester }})</span
         >
         <span v-else-if="degree.semester.length === 1"
           >({{ degree.semester[0].semester }})</span
         >
       </p>
       <p v-if="degree.semester.length > 0">
-        Anzahl Studis ({{
-          degree.semester[degree.semester.length - 1].semester
-        }}): {{ degree.semester[degree.semester.length - 1].data.total || 0 }}
+        Anzahl Studis ({{ degree.semester[0].semester }}):
+        {{ degree.semester[0].data.total || 0 }}
       </p>
     </div>
     <hr class="h-0.5 bg-primary" />

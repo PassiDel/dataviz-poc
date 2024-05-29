@@ -1,3 +1,5 @@
+import degreesJson from './assets/daten.json';
+
 export type SemesterDataCategories =
   | 'total'
   | 'totalGerman'
@@ -21,8 +23,8 @@ export type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 // Supports every year including 1000-9999
 export type Year = `${Exclude<Digit, '0'>}${Digit}${Digit}${Digit}`;
 
-// Semester name truncated, "WiSe 2016/17" becomes "WiSe 2016"
-export type Semester = `WiSe ${Year}` | `SoSe ${Year}`;
+// Semester name truncated, "WiSe2016/17" becomes "WiSe2016"
+export type Semester = `WiSe${Year}` | `SoSe${Year}`;
 
 // Data from "Studium (1)"
 export type SemesterData = {
@@ -37,107 +39,20 @@ export type DegreeData = {
   fak: string;
   campus: string;
   number: number;
-  type: 'Bachelor' | 'Master';
+  type: 'Bachelor' | 'Master' | 'Diplom';
   semester: SemesterData[];
 };
 
-// Example
+export const degrees = degreesJson as DegreeData[];
 
-const dsbw = {
-  name: 'DS Betriebswirtschaft BA',
-  short: 'DSBW BA',
-  faculty: 1,
-  fak: '1',
-  campus: 'WS',
-  number: 714,
-  type: 'Bachelor',
-  semester: [
-    // TODO: this is fake data
-    {
-      semester: 'WiSe 2022',
-      data: {
-        total: 87,
-        totalGerman: 86,
-        maleGerman: 49,
-        femaleGerman: 37,
-        diverseGerman: 0,
-        totalForeign: 1,
-        maleForeign: 1,
-        femaleForeign: 0,
-        diverseForeign: 0,
-        totalPause: 0,
-        malePause: 0,
-        femalePause: 0,
-        diversePause: 0,
-        totalBeginner: 27,
-        maleBeginner: 13,
-        femaleBeginner: 14,
-        diverseBeginner: 0
-      }
-    },
-    {
-      semester: 'WiSe 2023',
-      data: {
-        total: 77,
-        totalGerman: 76,
-        maleGerman: 39,
-        femaleGerman: 37,
-        diverseGerman: 0,
-        totalForeign: 1,
-        maleForeign: 1,
-        femaleForeign: 0,
-        diverseForeign: 0,
-        totalPause: 0,
-        malePause: 0,
-        femalePause: 0,
-        diversePause: 0,
-        totalBeginner: 27,
-        maleBeginner: 13,
-        femaleBeginner: 14,
-        diverseBeginner: 0
-      }
-    }
-  ]
-} satisfies DegreeData;
-const mi = {
-  name: 'IS Medieninformatik BSc',
-  short: 'ISMI BSc',
-  faculty: 4,
-  fak: '4',
-  campus: 'ZI',
-  number: 998,
-  type: 'Bachelor',
-  semester: [
-    {
-      semester: 'WiSe 2023',
-      data: {
-        total: 310,
-        totalGerman: 267,
-        maleGerman: 209,
-        femaleGerman: 57,
-        diverseGerman: 1,
-        totalForeign: 43,
-        maleForeign: 30,
-        femaleForeign: 13,
-        diverseForeign: 0,
-        totalPause: 3,
-        malePause: 3,
-        femalePause: 0,
-        diversePause: 0,
-        totalBeginner: 70,
-        maleBeginner: 53,
-        femaleBeginner: 16,
-        diverseBeginner: 1
-      }
-    }
-  ]
-} satisfies DegreeData;
-
-export const degrees: DegreeData[] = [dsbw, mi];
+export const LATEST_YEAR: Semester = 'WiSe2023';
 
 export const faculties = degrees.reduce(
   (ff, d) => {
     ff.find((fac) => fac.number === d.faculty)?.degrees.push(d);
+    if (!ff.find((fac) => fac.number === d.faculty)) {
+      console.warn(d.faculty, d);
+    }
     return ff;
   },
   [
@@ -173,14 +88,15 @@ export const campus = {
   WS: 'Werderstraße',
   IG: 'IGC',
   ZI: 'ZIMT',
-  NW: 'Neustadtswall'
+  NW: 'Neustadtswall',
+  HÖ: 'Hö?'
 } as const;
 
-export function campusMap(short: string) {
+export function campusMap(short: string, returnNWAsDefault = true) {
   if (short in campus) {
     return campus[short as keyof typeof campus];
   }
-  return campus.NW;
+  return returnNWAsDefault ? campus.NW : short;
 }
 
 export const categoryMap: { [k in SemesterDataCategories]: string } = {

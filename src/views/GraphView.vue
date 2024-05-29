@@ -76,7 +76,9 @@ const data = computed<ChartData<'scatter', DegreeData[]>>(() => ({
         const key =
           group.value === 'faculty'
             ? degree._fName
-            : String(degree[group.value]);
+            : group.value === 'campus'
+              ? campusMap(String(degree[group.value]), false)
+              : String(degree[group.value]);
         const g = datasets.find((d) => d.label === key);
         if (!g) {
           datasets.push({
