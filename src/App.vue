@@ -6,13 +6,7 @@ import { RouterLink, RouterView } from 'vue-router';
   <VaLayout :top="{ fixed: true, order: 2 }" class="h-dvh">
     <template #top>
       <VaNavbar color="secondary">
-        <template #left>
-          <img
-            alt="HSB logo"
-            src="@/assets/hsb.png"
-            class="m-[-20px] md:h-32"
-          />
-        </template>
+        <template #left> HSB </template>
         <template #right>
           <div class="flex flex-col gap-2 md:flex-row md:gap-4">
             <RouterLink to="/">Home</RouterLink>

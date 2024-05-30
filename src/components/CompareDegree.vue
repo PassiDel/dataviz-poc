@@ -13,7 +13,9 @@ const { degree } = defineProps<{
 <template>
   <div>
     <h2>{{ degree.name }}</h2>
-    <div class="my-2 flex flex-col gap-2">
+    <hr class="h-0.5 bg-primary" />
+    <GenderNationality :degree="degree" />
+    <div class="my-2 grid grid-cols-2 gap-2">
       <p class="text-xl font-bold">
         {{ degree.short }}
       </p>
@@ -41,7 +43,6 @@ const { degree } = defineProps<{
       </p>
     </div>
     <hr class="h-0.5 bg-primary" />
-    <GenderNationality :degree="degree" />
     <RadarYears :degree="degree" />
   </div>
 </template>

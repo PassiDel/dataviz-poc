@@ -47,7 +47,9 @@ const chartOptions = ref({
             label.fillStyle = datasetColors[label.index || 0];
           });
 
-          return labelsOriginal;
+          return labelsOriginal.filter(
+            (l) => l.datasetIndex === 0 || (l.index || 0) % 2 === 0
+          );
         }
       },
       onClick: function (_, legendItem, legend) {
@@ -96,9 +98,9 @@ const chartOptions = ref({
           'Männlich',
           'NB',
 
-          'Weiblich',
+          'NB',
           'Männlich',
-          'NB'
+          'Weiblich'
         ],
         datasets:
           degree.semester.length > 0
@@ -116,17 +118,17 @@ const chartOptions = ref({
                     degree.semester[0].data.maleGerman,
                     degree.semester[0].data.diverseGerman,
 
-                    degree.semester[0].data.femaleForeign,
+                    degree.semester[0].data.diverseForeign,
                     degree.semester[0].data.maleForeign,
-                    degree.semester[0].data.diverseForeign
+                    degree.semester[0].data.femaleForeign
                   ].map((v) => v || 0),
                   backgroundColor: [
                     'red',
                     'blue',
                     'green',
-                    'red',
+                    'green',
                     'blue',
-                    'green'
+                    'red'
                   ]
                 }
               ]

@@ -101,6 +101,12 @@ const groupOptions = ['faculty', 'fak', 'campus', 'type'].map((o) => ({
   t: degreeKeyMap[o as Groups]
 }));
 
+// TODO
+const dataOptions = ['Studiengang', 'Fakultät', 'HSB'].map((o) => ({
+  v: o,
+  t: o
+}));
+
 function keyLabel(key: Keys) {
   return key.startsWith('semester.0.data.')
     ? categoryMap[key.substring(16) as SemesterDataCategories]
@@ -124,6 +130,14 @@ watch(keys, () => {
 <template>
   <main class="flex h-full grid-cols-4 flex-col gap-3 p-3 md:grid">
     <div class="flex h-fit flex-col gap-2">
+      <VaSelect
+        v-model="dataOptions[0].v"
+        label="Datensatz"
+        :options="dataOptions"
+        class="w-full"
+        text-by="t"
+        value-by="v"
+      />
       <VaSelect
         v-model="group"
         label="Gruppierung"
