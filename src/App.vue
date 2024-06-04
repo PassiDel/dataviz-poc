@@ -9,10 +9,21 @@ import { RouterLink, RouterView } from 'vue-router';
         <template #left> HSB </template>
         <template #right>
           <div class="flex flex-col gap-2 md:flex-row md:gap-4">
-            <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/compare">Vergleich</RouterLink>
-            <RouterLink to="/university">Ganze Hochschule</RouterLink>
-            <RouterLink to="/graph">Graph</RouterLink>
+            <RouterLink to="/" activeClass="font-bold" class="hover:underline"
+              >Start</RouterLink
+            >
+            <RouterLink
+              to="/compare"
+              activeClass="font-bold"
+              class="hover:underline"
+              >Vergleich</RouterLink
+            >
+            <RouterLink
+              to="/graph"
+              activeClass="font-bold"
+              class="hover:underline"
+              >Alles</RouterLink
+            >
           </div>
         </template>
       </VaNavbar>
