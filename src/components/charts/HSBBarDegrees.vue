@@ -73,7 +73,7 @@ function degreeToData(degree: DegreeData) {
   data[degree.faculty - 1] = getTotalStudents(degree);
   return data;
 }
-const campus = ['WS', 'IG', 'ZI', 'NW', 'HÖ'];
+// const campus = ['WS', 'IG', 'ZI', 'NW', 'HÖ'];
 </script>
 
 <template>
@@ -82,7 +82,7 @@ const campus = ['WS', 'IG', 'ZI', 'NW', 'HÖ'];
       :options="chartOptions"
       :data="{
         labels: [1, 2, 3, 4, 5],
-        datasets: degrees.map((d, i) => ({
+        datasets: degrees.map((d) => ({
           label: d.name,
           data: degreeToData(d),
           order: -getTotalStudents(d)

@@ -26,8 +26,12 @@ provide(HIDE_BUTTONS, true);
     </div>
     <div class="column flex flex-col gap-3">
       <h3>{{ faculty.degrees.length }} Studiengänge</h3>
+      <span v-for="type in dpt" :key="type.type" class="ml-4">
+        <span class="inline-block w-8">{{ type.amount }} x</span>
+        <DegreeType :type="type.type" class="mr-auto" />
+      </span>
       <h3>
-        {{ campus.length }} Campus
+        {{ campus.length }} Standorte
         <VaPopover
           class="mb-2 mr-2"
           :message="campus.map((c) => campusMap(c)).join(', ')"
@@ -37,9 +41,15 @@ provide(HIDE_BUTTONS, true);
         </VaPopover>
       </h3>
       <h3>{{ sum.toLocaleString('de') }} Studis insgesamt</h3>
-      <span v-for="type in dpt" :key="type.type">
-        <DegreeType :type="type.type" class="mr-auto" />:
-        {{ type.amount }} Studis
+      <span
+        v-for="type in dpt.filter((t) => t.students > 0)"
+        :key="type.type"
+        class="ml-4"
+      >
+        <span class="inline-block w-14"
+          >{{ type.students.toLocaleString('de') }} x</span
+        >
+        <DegreeType :type="type.type" class="mr-auto" />
       </span>
     </div>
     <div class="column">

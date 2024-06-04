@@ -182,20 +182,24 @@ export function sumDegrees(faculty: (typeof faculties)[0]): DegreeData {
 
 export function sumCalcDegrees(faculty: (typeof faculties)[0]) {
   const dpt = faculty.degrees.reduce<
-    { type: DegreeData['type']; amount: number }[]
+    { type: DegreeData['type']; amount: number; students: number }[]
   >((types, cur) => {
     const type = types.find((s) => s.type === cur.type);
+    const students =
+      cur.semester.find((s) => s.semester === LATEST_YEAR)?.data?.total || 0;
     if (!type) {
       types.push({
         type: cur.type,
-        amount: 1
+        amount: 1,
+        students
       });
       return types;
     }
     type.amount++;
+    type.students += students;
     return types;
   }, []);
-  dpt.sort((a, b) => (a.type > b.type ? 1 : -1));
+  dpt.sort((a, b) => b.amount - a.amount);
 
   const sum = faculty.degrees
     .filter((d) => d.semester[0].semester === LATEST_YEAR)
