@@ -3,7 +3,6 @@ import ChartDownload from '@/components/ChartDownload.vue';
 import {
   Chart as ChartJS,
   type ChartData,
-  Colors,
   Legend,
   LinearScale,
   LineElement,
@@ -22,6 +21,7 @@ import {
   type SemesterDataCategories
 } from '@/data';
 import { useQuery } from '@/composables/useQuery';
+import HSBColors from '@/utils/HSBColors';
 
 ChartJS.register(
   LinearScale,
@@ -29,7 +29,7 @@ ChartJS.register(
   LineElement,
   Tooltip,
   Legend,
-  Colors,
+  HSBColors,
   Title
 );
 
@@ -200,12 +200,21 @@ watch(keys, () => {
                 title: {
                   display: true,
                   text: keyLabel(keys.x)
+                },
+                ticks: {
+                  stepSize: keys.x === 'faculty' ? 1 : 0
                 }
               },
               y: {
                 title: {
                   display: true,
                   text: keyLabel(keys.y)
+                },
+                ticks: {
+                  stepSize: keys.y === 'faculty' ? 1 : 0,
+                  callback(tickValue) {
+                    return tickValue.toLocaleString('de');
+                  }
                 }
               }
             },

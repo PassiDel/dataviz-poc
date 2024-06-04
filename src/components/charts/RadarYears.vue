@@ -3,7 +3,6 @@ import type { DegreeData } from '@/data';
 import {
   Chart as ChartJS,
   type ChartOptions,
-  Colors,
   Filler,
   Legend,
   LineElement,
@@ -15,6 +14,7 @@ import {
 import { Radar } from 'vue-chartjs';
 import ChartDownload from '@/components/ChartDownload.vue';
 import { ref } from 'vue';
+import HSBColors from '@/utils/HSBColors';
 
 ChartJS.register(
   RadialLinearScale,
@@ -24,7 +24,7 @@ ChartJS.register(
   Tooltip,
   Legend,
   Title,
-  Colors
+  HSBColors
 );
 
 const { degree } = defineProps<{
