@@ -28,14 +28,15 @@ const { degree } = defineProps<{
       <p>Fakultät {{ degree.f.number }}</p>
       <p>Standort: {{ campusMap(degree.campus) || '' }}</p>
       <p>
-        {{ degree.semester.length }} Semester Daten
+        Erfasster Zeitraum:<br />
         <span v-if="degree.semester.length > 1"
-          >({{ degree.semester[degree.semester.length - 1].semester }} -
-          {{ degree.semester[0].semester }})</span
+          >{{ degree.semester[degree.semester.length - 1].semester }} -
+          {{ degree.semester[0].semester }}</span
         >
-        <span v-else-if="degree.semester.length === 1"
-          >({{ degree.semester[0].semester }})</span
-        >
+        <span v-else-if="degree.semester.length === 1">{{
+          degree.semester[0].semester
+        }}</span>
+        <br />({{ degree.semester.length }} Semester)
       </p>
       <p v-if="degree.semester.length > 0">
         Anzahl Studis ({{ degree.semester[0].semester }}):
