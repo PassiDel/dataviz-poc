@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { getCurrentInstance, onMounted, ref } from 'vue';
+import { getCurrentInstance, inject, onMounted, ref } from 'vue';
 import { Chart as ChartJS } from 'chart.js';
+import { HIDE_BUTTONS } from '@/symbols';
 
 ChartJS.defaults.font.family = 'Zilla Slab';
 const instance = getCurrentInstance();
@@ -11,6 +12,8 @@ withDefaults(
   }>(),
   { hideButtons: false }
 );
+
+const hideButtonsInj = inject(HIDE_BUTTONS, false);
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 onMounted(() => {
@@ -42,7 +45,7 @@ function copy() {
 
 <template>
   <slot />
-  <VaButtonGroup :disabled="!canvas" v-if="!hideButtons">
+  <VaButtonGroup :disabled="!canvas" v-if="!(hideButtons || hideButtonsInj)">
     <VaButton
       icon="download"
       @click="download"

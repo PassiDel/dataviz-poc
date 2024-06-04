@@ -179,3 +179,32 @@ export function sumDegrees(faculty: (typeof faculties)[0]): DegreeData {
     }
   );
 }
+
+export function sumCalcDegrees(faculty: (typeof faculties)[0]) {
+  const dpt = faculty.degrees.reduce<
+    { type: DegreeData['type']; amount: number }[]
+  >((types, cur) => {
+    const type = types.find((s) => s.type === cur.type);
+    if (!type) {
+      types.push({
+        type: cur.type,
+        amount: 1
+      });
+      return types;
+    }
+    type.amount++;
+    return types;
+  }, []);
+  dpt.sort((a, b) => (a.type > b.type ? 1 : -1));
+
+  const sum = faculty.degrees
+    .filter((d) => d.semester[0].semester === LATEST_YEAR)
+    .reduce(
+      (count, degree) => count + (degree.semester[0]?.data?.total || 0),
+      0
+    );
+
+  const campus = new Set<DegreeData['campus']>();
+  faculty.degrees.forEach((d) => campus.add(d.campus));
+  return { dpt, sum, campus: [...campus] };
+}

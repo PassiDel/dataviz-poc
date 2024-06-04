@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router';
   <VaLayout :top="{ fixed: true, order: 2 }" class="h-dvh">
     <template #top>
       <VaNavbar color="secondary">
-        <template #left> HSB </template>
+        <template #left>Die Hochschule in Zahlen!</template>
         <template #right>
           <div class="flex flex-col gap-2 md:flex-row md:gap-4">
             <RouterLink to="/" activeClass="font-bold" class="hover:underline"
