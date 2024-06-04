@@ -11,7 +11,6 @@ import { RouterLink, RouterView } from 'vue-router';
           <div class="flex flex-col gap-2 md:flex-row md:gap-4">
             <RouterLink to="/">Home</RouterLink>
             <RouterLink to="/compare">Vergleich</RouterLink>
-            <RouterLink to="/faculty">Fakultäten</RouterLink>
             <RouterLink to="/university">Ganze Hochschule</RouterLink>
             <RouterLink to="/graph">Graph</RouterLink>
           </div>

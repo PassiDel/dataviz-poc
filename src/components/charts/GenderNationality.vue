@@ -66,7 +66,7 @@ const chartOptions = ref({
           return (
             context.chart.data.labels?.[labelIndex] +
             ': ' +
-            context.formattedValue
+            (context.raw as number).toLocaleString('de')
           );
         },
         title: function (context): string {

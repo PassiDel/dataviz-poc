@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { campusMap, type DegreeData } from '@/data';
 import GenderNationality from '@/components/charts/GenderNationality.vue';
-import RadarYears from '@/components/charts/RadarYears.vue';
+import DegreeType from '@/components/DegreeType.vue';
 
 const { degree } = defineProps<{
   degree: DegreeData & {
@@ -19,11 +19,7 @@ const { degree } = defineProps<{
       <p class="text-xl font-bold">
         {{ degree.short }}
       </p>
-      <VaChip
-        class="mr-auto"
-        :color="degree.type === 'Bachelor' ? 'warning' : 'danger'"
-        >{{ degree.type }}</VaChip
-      >
+      <DegreeType :type="degree.type" class="mr-auto" />
 
       <p>Fakultät {{ degree.f.number }}</p>
       <p>Standort: {{ campusMap(degree.campus) || '' }}</p>
@@ -44,7 +40,7 @@ const { degree } = defineProps<{
       </p>
     </div>
     <hr class="h-0.5 bg-primary" />
-    <RadarYears :degree="degree" />
+    <!--    <RadarYears :degree="degree" />-->
   </div>
 </template>
 

@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { faculties } from '@/data';
 
-const { hideDegrees, right } = withDefaults(
+const props = withDefaults(
   defineProps<{
-    hideDegrees?: boolean;
     right?: boolean;
+    selectedFaculty?: number;
   }>(),
   {
-    hideDegrees: false,
     right: false
   }
 );
@@ -23,30 +22,23 @@ const selected = defineModel('selected', { default: 0 });
     <VaAccordion stateful>
       <VaCollapse v-for="(faculty, i) in faculties" :key="`f-${i}`">
         <template #header-content>
-          <a
-            href="#"
-            v-if="hideDegrees"
-            @click.prevent="() => (selected = faculty.number)"
-          >
+          <a href="#" @click.prevent="() => (selected = faculty.number)">
             <h3
-              class="font-bold"
-              :class="{ underline: selected === faculty.number }"
+              class="font-bold hover:underline"
+              :class="{
+                underline: selected === faculty.number,
+                italic: selectedFaculty === faculty.number
+              }"
             >
               {{ faculty.name }}
             </h3></a
-          >
-          <h3 v-else class="bg-backgroundPrimary font-bold">
-            {{ faculty.name }}
-          </h3> </template
+          ></template
         ><template #content>
-          <div v-if="!hideDegrees" class="flex flex-col">
+          <div class="flex flex-col">
             <div v-for="(degree, j) in faculty.degrees" :key="`d-${i}-${j}`">
-              <a
-                href="#"
-                v-if="!hideDegrees"
-                @click.prevent="() => (selected = degree.number)"
-              >
+              <a href="#" @click.prevent="() => (selected = degree.number)">
                 <h4
+                  class="hover:underline"
                   :class="{
                     underline: selected === degree.number,
                     'pl-2': !right,
@@ -56,7 +48,6 @@ const selected = defineModel('selected', { default: 0 });
                   {{ degree.name }}
                 </h4></a
               >
-              <h4 v-else class="pl-2">{{ degree.name }}</h4>
             </div>
           </div>
         </template>

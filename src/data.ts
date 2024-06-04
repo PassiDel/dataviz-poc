@@ -129,3 +129,53 @@ export const degreeKeyMap: {
   campus: 'Campus',
   type: 'Art'
 };
+
+const GenderNationalityKeys = [
+  'totalGerman',
+  'totalForeign',
+  'femaleGerman',
+  'maleGerman',
+  'diverseGerman',
+  'diverseForeign',
+  'maleForeign',
+  'femaleForeign'
+] as const;
+
+export function sumDegrees(faculty: (typeof faculties)[0]): DegreeData {
+  return faculty.degrees.reduce(
+    (fd, d) => {
+      const lastSemester = d.semester.find((s) => s.semester === LATEST_YEAR);
+      if (lastSemester) {
+        GenderNationalityKeys.forEach(
+          (k) => (fd.semester[0].data[k]!! += lastSemester.data[k] || 0)
+        );
+      }
+      fd.campus = d.campus;
+      return fd;
+    },
+    {
+      name: faculty.name,
+      short: faculty.number.toString(),
+      faculty: faculty.number,
+      fak: faculty.number.toString(),
+      campus: 'NW',
+      number: faculty.number,
+      type: 'Bachelor',
+      semester: [
+        {
+          semester: LATEST_YEAR,
+          data: {
+            totalGerman: 0,
+            totalForeign: 0,
+            femaleGerman: 0,
+            maleGerman: 0,
+            diverseGerman: 0,
+            diverseForeign: 0,
+            maleForeign: 0,
+            femaleForeign: 0
+          }
+        }
+      ]
+    }
+  );
+}
