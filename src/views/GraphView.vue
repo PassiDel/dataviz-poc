@@ -190,6 +190,11 @@ watch(keys, () => {
               xAxisKey: keys.x,
               yAxisKey: keys.y
             },
+            elements: {
+              point: {
+                radius: 6
+              }
+            },
             scales: {
               x: {
                 title: {
