@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { getCurrentInstance, onMounted, ref } from 'vue';
+import { Chart as ChartJS } from 'chart.js';
 
+ChartJS.defaults.font.family = 'Zilla Slab';
 const instance = getCurrentInstance();
+
+withDefaults(
+  defineProps<{
+    hideButtons?: boolean;
+  }>(),
+  { hideButtons: false }
+);
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 onMounted(() => {
@@ -33,7 +42,7 @@ function copy() {
 
 <template>
   <slot />
-  <VaButtonGroup :disabled="!canvas">
+  <VaButtonGroup :disabled="!canvas" v-if="!hideButtons">
     <VaButton
       icon="download"
       @click="download"
