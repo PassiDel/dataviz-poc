@@ -2,20 +2,30 @@
 import GenderNationality from '@/components/charts/GenderNationality.vue';
 import {
   campusMap,
+  degrees,
   degrees as _degrees,
+  faculties,
   sumCalcDegrees,
   sumDegrees
 } from '@/data';
-import { provide } from 'vue';
+import { provide, ref } from 'vue';
 import { HIDE_BUTTONS } from '@/symbols';
 import DegreeType from '@/components/DegreeType.vue';
 import HSBBarDegrees from '@/components/charts/HSBBarDegrees.vue';
+import AnimatedSelection from '@/components/AnimatedSelection.vue';
 
 const faculty = { name: 'HSB', number: 0, degrees: _degrees };
 const degree = sumDegrees(faculty);
 
 const { dpt, sum, campus } = sumCalcDegrees(faculty);
 provide(HIDE_BUTTONS, true);
+
+const options = [
+  ...degrees.map(({ name, number }) => ({ name, number })),
+  ...faculties.map(({ name, number }) => ({ name, number }))
+];
+const selectLeft = ref(0);
+const selectRight = ref(0);
 </script>
 
 <template>
@@ -55,6 +65,17 @@ provide(HIDE_BUTTONS, true);
     <div class="column">
       <HSBBarDegrees />
     </div>
+  </div>
+  <div class="mx-auto mt-4 w-fit text-2xl">
+    Vergleiche
+    <AnimatedSelection v-model:selected="selectLeft" :options="options" />
+    mit
+    <AnimatedSelection v-model:selected="selectRight" :options="options" />
+    <VaButton
+      icon="open_in_new"
+      class="ml-4"
+      :to="`/compare?left=${selectLeft}&right=${selectRight}`"
+    />
   </div>
 </template>
 
