@@ -22,7 +22,7 @@ const degree = computed(() => sumDegrees(props.faculty));
       <h3>{{ faculty.degrees.length }} Studiengänge</h3>
       <h3>{{ computedValues.sum.toLocaleString('de') }} Studis</h3>
       <h3>
-        {{ computedValues.campus.length }} Campus
+        {{ computedValues.campus.length }} Standorte
         <VaPopover
           class="mb-2 mr-2"
           :message="computedValues.campus.map((c) => campusMap(c)).join(', ')"
@@ -32,8 +32,13 @@ const degree = computed(() => sumDegrees(props.faculty));
         </VaPopover>
       </h3>
       <span v-for="type in computedValues.dpt" :key="type.type">
-        <DegreeType :type="type.type" class="mr-auto" />:
-        {{ type.amount }} Studis
+        <span class="inline-block w-10"
+          >{{ type.amount.toLocaleString('de') }} x</span
+        >
+        <DegreeType :type="type.type" class="" />
+        <span class="float-right mr-2 inline-block"
+          >{{ type.students.toLocaleString('de') }} Studis</span
+        >
       </span>
     </div>
     <hr class="h-0.5 bg-primary" />

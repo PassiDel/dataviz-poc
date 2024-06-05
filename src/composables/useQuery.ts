@@ -7,6 +7,26 @@ export function useQuery<Keys extends Record<string, string | number>>(
   const route = useRoute();
   const router = useRouter();
 
+  watch(router.currentRoute, (nr) =>
+    Object.entries(key).forEach(([_k, v]) => {
+      const k = _k as keyof Keys;
+
+      if (
+        _k in nr.query &&
+        typeof nr.query[_k] === 'string' &&
+        (typeof v === 'number'
+          ? !isNaN(parseInt(nr.query[_k] as string))
+          : true)
+      ) {
+        selected[k].value = (
+          typeof v === 'number'
+            ? parseInt(nr.query[_k] as string)
+            : nr.query[_k]
+        ) as Keys[typeof k];
+      }
+    })
+  );
+
   const selected = Object.fromEntries(
     Object.entries(key).map(([k, v]) => [k, ref(v)])
   ) as { [k in keyof Keys]: Ref<Keys[k]> };

@@ -36,7 +36,7 @@ onMounted(() =>
 );
 onUnmounted(() => clearInterval(interval));
 
-const selected = defineModel('selected', { default: 0 });
+const selected = defineModel<number>('selected', { default: 0 });
 </script>
 
 <template>

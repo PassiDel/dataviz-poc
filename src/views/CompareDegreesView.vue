@@ -28,7 +28,7 @@ const rightFaculty = computed(() =>
 </script>
 
 <template>
-  <main class="flex h-full grid-cols-6 flex-col gap-3 p-3 md:grid">
+  <main class="flex grid-cols-6 flex-col gap-3 p-3 md:grid">
     <DataSelect
       v-model:selected="left"
       :selectedFaculty="leftDegree?.faculty"
