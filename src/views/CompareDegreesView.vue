@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import DataSelect from '@/components/DataSelect.vue';
-import { computed } from 'vue';
-import { faculties } from '@/data';
+import { computed, ref } from 'vue';
+import { faculties, type Semester } from '@/data';
 import CompareDegree from '@/components/CompareDegree.vue';
 import { useQuery } from '@/composables/useQuery';
 import CompareFaculty from '@/components/CompareFaculty.vue';
+import PlayBar from '@/components/PlayBar.vue';
+import { getSemesterFromDegrees } from '@/utils/semester';
 
 const { left, right } = useQuery({ left: 0, right: 0 });
 
@@ -25,38 +27,68 @@ const rightDegree = computed(() =>
 const rightFaculty = computed(() =>
   faculties.find((f) => f.number === right.value)
 );
+
+const years = computed<Semester[]>(() =>
+  getSemesterFromDegrees(
+    leftDegree.value,
+    rightDegree.value,
+    ...(leftFaculty.value?.degrees ?? []),
+    ...(rightFaculty.value?.degrees ?? [])
+  )
+);
+
+const year = ref<Semester>(years.value[years.value.length - 1]);
 </script>
 
 <template>
-  <main class="flex grid-cols-6 flex-col gap-3 p-3 md:grid">
+  <main class="flex grid-cols-6 flex-col gap-3 p-3 pb-24 md:grid">
     <DataSelect
       v-model:selected="left"
       :selectedFaculty="leftDegree?.faculty"
     />
-    <CompareDegree v-if="leftDegree" :degree="leftDegree" class="degree" />
+    <CompareDegree
+      v-if="leftDegree"
+      :degree="leftDegree"
+      :year="year"
+      class="degree"
+    />
     <CompareFaculty
       v-else-if="leftFaculty"
       :faculty="leftFaculty"
+      :year="year"
       class="degree"
     />
     <div v-else class="col-span-2">
-      <h2>Wähle links einen Studiengang aus!</h2>
+      <h2>
+        Wähle links einen <span class="font-bold">Studiengang</span> oder eine
+        <span class="font-bold">Fakultät</span> aus!
+      </h2>
     </div>
     <hr class="my-4 border-2 border-primary md:hidden" />
-    <CompareDegree v-if="rightDegree" :degree="rightDegree" class="degree" />
+    <CompareDegree
+      v-if="rightDegree"
+      :degree="rightDegree"
+      :year="year"
+      class="degree"
+    />
     <CompareFaculty
       v-else-if="rightFaculty"
       :faculty="rightFaculty"
+      :year="year"
       class="degree"
     />
     <div v-else class="col-span-2">
-      <h2>Wähle rechts einen Studiengang aus!</h2>
+      <h2>
+        Wähle rechts einen <span class="font-bold">Studiengang</span> oder eine
+        <span class="font-bold">Fakultät</span> aus!
+      </h2>
     </div>
     <DataSelect
       v-model:selected="right"
       :selectedFaculty="rightDegree?.faculty"
       right
     />
+    <PlayBar v-if="years.length > 0" :years="years" v-model="year" />
   </main>
 </template>
 

@@ -1,23 +1,30 @@
 <script setup lang="ts">
-import { campusMap, type faculties, sumCalcDegrees, sumDegrees } from '@/data';
+import {
+  campusMap,
+  type faculties,
+  type Semester,
+  sumCalcDegrees,
+  sumDegrees
+} from '@/data';
 import { computed } from 'vue';
 import DegreeType from '@/components/DegreeType.vue';
 import GenderNationality from '@/components/charts/GenderNationality.vue';
 
 const props = defineProps<{
   faculty: (typeof faculties)[0];
+  year: Semester;
 }>();
 
 const computedValues = computed(() => sumCalcDegrees(props.faculty));
 
-const degree = computed(() => sumDegrees(props.faculty));
+const degree = computed(() => sumDegrees(props.faculty, props.year));
 </script>
 
 <template>
   <div>
     <h2>{{ faculty.name }}</h2>
     <hr class="h-0.5 bg-primary" />
-    <GenderNationality :degree="degree" />
+    <GenderNationality :degree="degree" :year="year" />
     <div class="my-2 grid grid-flow-col grid-cols-2 grid-rows-3 gap-2">
       <h3>{{ faculty.degrees.length }} Studiengänge</h3>
       <h3>{{ computedValues.sum.toLocaleString('de') }} Studis</h3>

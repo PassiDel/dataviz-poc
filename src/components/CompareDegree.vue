@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { campusMap, type DegreeData } from '@/data';
+import { campusMap, type DegreeData, type Semester } from '@/data';
 import GenderNationality from '@/components/charts/GenderNationality.vue';
 import DegreeType from '@/components/DegreeType.vue';
 
-const { degree } = defineProps<{
+const props = defineProps<{
   degree: DegreeData & {
     f: { name: string; number: number };
   };
+  year: Semester;
 }>();
 </script>
 
@@ -14,7 +15,7 @@ const { degree } = defineProps<{
   <div>
     <h2>{{ degree.name }}</h2>
     <hr class="h-0.5 bg-primary" />
-    <GenderNationality :degree="degree" />
+    <GenderNationality :degree="degree" :year="year" />
     <div class="my-2 grid grid-cols-2 gap-2">
       <p class="text-xl font-bold">
         {{ degree.short }}

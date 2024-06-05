@@ -141,10 +141,13 @@ const GenderNationalityKeys = [
   'femaleForeign'
 ] as const;
 
-export function sumDegrees(faculty: (typeof faculties)[0]): DegreeData {
+export function sumDegrees(
+  faculty: (typeof faculties)[0],
+  year: Semester = LATEST_YEAR
+): DegreeData {
   return faculty.degrees.reduce(
     (fd, d) => {
-      const lastSemester = d.semester.find((s) => s.semester === LATEST_YEAR);
+      const lastSemester = d.semester.find((s) => s.semester === year);
       if (lastSemester) {
         GenderNationalityKeys.forEach(
           (k) => (fd.semester[0].data[k]!! += lastSemester.data[k] || 0)
@@ -163,7 +166,7 @@ export function sumDegrees(faculty: (typeof faculties)[0]): DegreeData {
       type: 'Bachelor',
       semester: [
         {
-          semester: LATEST_YEAR,
+          semester: year,
           data: {
             totalGerman: 0,
             totalForeign: 0,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DegreeData } from '@/data';
+import { type DegreeData, LATEST_YEAR, type Semester } from '@/data';
 import { Pie } from 'vue-chartjs';
 import {
   ArcElement,
@@ -13,8 +13,9 @@ import { ref } from 'vue';
 import ChartDownload from '@/components/ChartDownload.vue';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
-const { degree } = defineProps<{
+defineProps<{
   degree: DegreeData;
+  year?: Semester;
 }>();
 
 const chartOptions = ref({
@@ -83,6 +84,33 @@ const chartOptions = ref({
     }
   }
 } satisfies ChartOptions<'pie'>);
+
+function dataset(d: DegreeData, y: Semester = LATEST_YEAR) {
+  const semester = d.semester.find((s) => s.semester === y);
+  if (!semester) {
+    return [];
+  }
+  return [
+    {
+      data: [semester.data.totalGerman, semester.data.totalForeign].map(
+        (v) => v || 0
+      ),
+      backgroundColor: ['black', 'white']
+    },
+    {
+      data: [
+        semester.data.femaleGerman,
+        semester.data.maleGerman,
+        semester.data.diverseGerman,
+
+        semester.data.diverseForeign,
+        semester.data.maleForeign,
+        semester.data.femaleForeign
+      ].map((v) => v || 0),
+      backgroundColor: ['red', 'blue', 'green', 'green', 'blue', 'red']
+    }
+  ];
+}
 </script>
 
 <template>
@@ -102,37 +130,7 @@ const chartOptions = ref({
           'Männlich',
           'Weiblich'
         ],
-        datasets:
-          degree.semester.length > 0
-            ? [
-                {
-                  data: [
-                    degree.semester[0].data.totalGerman,
-                    degree.semester[0].data.totalForeign
-                  ].map((v) => v || 0),
-                  backgroundColor: ['black', 'white']
-                },
-                {
-                  data: [
-                    degree.semester[0].data.femaleGerman,
-                    degree.semester[0].data.maleGerman,
-                    degree.semester[0].data.diverseGerman,
-
-                    degree.semester[0].data.diverseForeign,
-                    degree.semester[0].data.maleForeign,
-                    degree.semester[0].data.femaleForeign
-                  ].map((v) => v || 0),
-                  backgroundColor: [
-                    'red',
-                    'blue',
-                    'green',
-                    'green',
-                    'blue',
-                    'red'
-                  ]
-                }
-              ]
-            : []
+        datasets: dataset(degree, year)
       }"
   /></ChartDownload>
 </template>
