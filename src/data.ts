@@ -183,17 +183,20 @@ export function sumDegrees(
   );
 }
 
-export function sumCalcDegrees(faculty: (typeof faculties)[0]) {
+export function sumCalcDegrees(
+  faculty: (typeof faculties)[0],
+  year: Semester = LATEST_YEAR
+) {
   const dpt = faculty.degrees.reduce<
     { type: DegreeData['type']; amount: number; students: number }[]
   >((types, cur) => {
     const type = types.find((s) => s.type === cur.type);
-    const students =
-      cur.semester.find((s) => s.semester === LATEST_YEAR)?.data?.total || 0;
+    const selectedYear = cur.semester.find((s) => s.semester === year);
+    const students = selectedYear?.data?.total || 0;
     if (!type) {
       types.push({
         type: cur.type,
-        amount: 1,
+        amount: year === LATEST_YEAR || selectedYear ? 1 : 0,
         students
       });
       return types;
@@ -204,16 +207,12 @@ export function sumCalcDegrees(faculty: (typeof faculties)[0]) {
   }, []);
   dpt.sort((a, b) => b.amount - a.amount);
 
-  const sum = faculty.degrees
-    .filter((d) => d.semester[0].semester === LATEST_YEAR)
-    .reduce(
-      (count, degree) => count + (degree.semester[0]?.data?.total || 0),
-      0
-    );
+  const sum = dpt.reduce((count, t) => count + t.students, 0);
+  const sumDegrees = dpt.reduce((count, t) => count + t.amount, 0);
 
   const campus = new Set<DegreeData['campus']>();
   faculty.degrees.forEach((d) => campus.add(d.campus));
-  return { dpt, sum, campus: [...campus] };
+  return { dpt, sum, sumDegrees, campus: [...campus] };
 }
 
 export function degreeIcon(degree: DegreeData) {

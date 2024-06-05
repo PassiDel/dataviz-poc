@@ -3,7 +3,7 @@ import { campusMap, type DegreeData, type Semester } from '@/data';
 import GenderNationality from '@/components/charts/GenderNationality.vue';
 import DegreeType from '@/components/DegreeType.vue';
 
-const props = defineProps<{
+defineProps<{
   degree: DegreeData & {
     f: { name: string; number: number };
   };
@@ -35,9 +35,20 @@ const props = defineProps<{
         }}</span>
         <br />({{ degree.semester.length }} Semester)
       </p>
-      <p v-if="degree.semester.length > 0">
-        Anzahl Studis ({{ degree.semester[0].semester }}):
-        {{ degree.semester[0].data.total || 0 }}
+      <p>
+        Anzahl Studis ({{ year }}):
+        {{
+          degree.semester
+            .find((s) => s.semester === year)
+            ?.data?.total?.toLocaleString('de') || 0
+        }}
+        <br />
+        Anzahl Studienanfänger:
+        {{
+          degree.semester
+            .find((s) => s.semester === year)
+            ?.data?.totalBeginner?.toLocaleString('de') || 0
+        }}
       </p>
     </div>
     <hr class="h-0.5 bg-primary" />

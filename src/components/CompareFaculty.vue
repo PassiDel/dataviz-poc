@@ -15,7 +15,9 @@ const props = defineProps<{
   year: Semester;
 }>();
 
-const computedValues = computed(() => sumCalcDegrees(props.faculty));
+const computedValues = computed(() =>
+  sumCalcDegrees(props.faculty, props.year)
+);
 
 const degree = computed(() => sumDegrees(props.faculty, props.year));
 </script>
@@ -26,7 +28,7 @@ const degree = computed(() => sumDegrees(props.faculty, props.year));
     <hr class="h-0.5 bg-primary" />
     <GenderNationality :degree="degree" :year="year" />
     <div class="my-2 grid grid-flow-col grid-cols-2 grid-rows-3 gap-2">
-      <h3>{{ faculty.degrees.length }} Studiengänge</h3>
+      <h3>{{ computedValues.sumDegrees }} Studiengänge</h3>
       <h3>{{ computedValues.sum.toLocaleString('de') }} Studis</h3>
       <h3>
         {{ computedValues.campus.length }} Standorte
