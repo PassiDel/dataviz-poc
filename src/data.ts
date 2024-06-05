@@ -212,3 +212,11 @@ export function sumCalcDegrees(faculty: (typeof faculties)[0]) {
   faculty.degrees.forEach((d) => campus.add(d.campus));
   return { dpt, sum, campus: [...campus] };
 }
+
+export function degreeIcon(degree: DegreeData) {
+  const hasLatestYear = degree.semester.some((s) => s.semester === LATEST_YEAR);
+  if (!hasLatestYear) {
+    return 'schedule';
+  }
+  return degree.semester.length > 2 ? `_` : 'crib';
+}

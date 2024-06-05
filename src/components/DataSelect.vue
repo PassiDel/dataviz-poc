@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { faculties } from '@/data';
+import { degreeIcon, faculties } from '@/data';
 
 const props = withDefaults(
   defineProps<{
@@ -45,9 +45,10 @@ const selected = defineModel('selected', { default: 0 });
                     'pr-3': right
                   }"
                 >
+                  <VaIcon v-if="!right" :name="degreeIcon(degree)" />
                   {{ degree.name }}
-                </h4></a
-              >
+                  <VaIcon v-if="right" :name="degreeIcon(degree)" /></h4
+              ></a>
             </div>
           </div>
         </template>
