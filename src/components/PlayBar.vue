@@ -35,7 +35,7 @@ onUnmounted(() => clearInterval(interval.value));
 
 <template>
   <div
-    class="fixed bottom-3 left-0 right-0 mx-auto w-3/6 rounded-2xl bg-gray-400 p-3 text-white"
+    class="fixed bottom-3 left-0 right-0 mx-2 rounded-2xl bg-gray-400 p-3 text-white md:mx-auto md:w-3/6"
   >
     <VaSlider
       :model-value="Math.max(years.indexOf(selected || 'WiSe1000'), 0)"

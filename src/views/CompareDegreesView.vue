@@ -59,9 +59,13 @@ const year = ref<Semester>(years.value[years.value.length - 1]);
       class="degree"
     />
     <div v-else class="col-span-2">
-      <h2>
-        Wähle links einen <span class="font-bold">Studiengang</span> oder eine
-        <span class="font-bold">Fakultät</span> aus!
+      <h2 class="hidden md:block">
+        Wähle links einen <span class="font-bold">Studiengang</span><br />
+        oder eine <span class="font-bold">Fakultät</span> aus!
+      </h2>
+      <h2 class="block md:hidden">
+        Wähle oben einen <span class="font-bold">Studiengang</span><br />
+        oder eine <span class="font-bold">Fakultät</span> aus!
       </h2>
     </div>
     <hr class="my-4 border-2 border-primary md:hidden" />
@@ -78,9 +82,13 @@ const year = ref<Semester>(years.value[years.value.length - 1]);
       class="degree"
     />
     <div v-else class="col-span-2">
-      <h2>
-        Wähle rechts einen <span class="font-bold">Studiengang</span> oder eine
-        <span class="font-bold">Fakultät</span> aus!
+      <h2 class="hidden md:block">
+        Wähle rechts einen <span class="font-bold">Studiengang</span><br />
+        oder eine <span class="font-bold">Fakultät</span> aus!
+      </h2>
+      <h2 class="block md:hidden">
+        Wähle unten einen <span class="font-bold">Studiengang</span><br />
+        oder eine <span class="font-bold">Fakultät</span> aus!
       </h2>
     </div>
     <DataSelect
