@@ -140,6 +140,7 @@ const GenderNationalityKeys = [
   'maleForeign',
   'femaleForeign'
 ] as const;
+const DegreeHistoryKeys = ['total', 'femaleGerman', 'maleGerman'] as const;
 
 export function sumDegrees(
   faculty: (typeof faculties)[0],
@@ -179,6 +180,39 @@ export function sumDegrees(
           }
         }
       ]
+    }
+  );
+}
+
+export function sumDegreesAllYears(faculty: (typeof faculties)[0]): DegreeData {
+  return faculty.degrees.reduce(
+    (fd, d) => {
+      d.semester.forEach((s) => {
+        let year = fd.semester.find((ss) => ss.semester === s.semester);
+        if (!year) {
+          year = {
+            semester: s.semester,
+            data: {
+              total: 0,
+              femaleGerman: 0,
+              maleGerman: 0
+            }
+          };
+          fd.semester.push(year);
+        }
+        DegreeHistoryKeys.forEach((k) => (year.data[k]!! += s.data[k] || 0));
+      });
+      return fd;
+    },
+    {
+      name: faculty.name,
+      short: faculty.number.toString(),
+      faculty: faculty.number,
+      fak: faculty.number.toString(),
+      campus: 'NW',
+      number: faculty.number,
+      type: 'Bachelor',
+      semester: []
     }
   );
 }

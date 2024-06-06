@@ -2,6 +2,7 @@
 import { campusMap, type DegreeData, type Semester } from '@/data';
 import GenderNationality from '@/components/charts/GenderNationality.vue';
 import DegreeType from '@/components/DegreeType.vue';
+import DegreeHistoryGender from '@/components/charts/DegreeHistoryGender.vue';
 
 defineProps<{
   degree: DegreeData & {
@@ -16,7 +17,7 @@ defineProps<{
     <h2>{{ degree.name }}</h2>
     <hr class="h-0.5 bg-primary" />
     <GenderNationality :degree="degree" :year="year" />
-    <div class="my-2 grid grid-cols-2 gap-2">
+    <div class="my-2 grid h-36 grid-cols-2 gap-2">
       <p class="text-xl font-bold">
         {{ degree.short }}
       </p>
@@ -52,7 +53,7 @@ defineProps<{
       </p>
     </div>
     <hr class="h-0.5 bg-primary" />
-    <!--    <RadarYears :degree="degree" />-->
+    <DegreeHistoryGender :degree="degree" :year="year" />
   </div>
 </template>
 
