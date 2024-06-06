@@ -11,6 +11,7 @@ import { computed } from 'vue';
 import DegreeType from '@/components/DegreeType.vue';
 import GenderNationality from '@/components/charts/GenderNationality.vue';
 import DegreeHistoryGender from '@/components/charts/DegreeHistoryGender.vue';
+import DegreeHistoryForeign from '@/components/charts/DegreeHistoryForeign.vue';
 
 const props = defineProps<{
   faculty: (typeof faculties)[0];
@@ -55,6 +56,8 @@ const degrees = computed(() => sumDegreesAllYears(props.faculty));
     </div>
     <hr class="h-0.5 bg-primary" />
     <DegreeHistoryGender :degree="degrees" :year="year" />
+    <hr class="h-0.5 bg-primary" />
+    <DegreeHistoryForeign :degree="degrees" :year="year" />
   </div>
 </template>
 
