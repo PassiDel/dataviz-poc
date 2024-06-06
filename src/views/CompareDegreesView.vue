@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import DataSelect from '@/components/DataSelect.vue';
 import { computed, ref } from 'vue';
-import { faculties, type Semester } from '@/data';
+import { degrees, faculties, type Semester, sumDegreesAllYears } from '@/data';
 import CompareDegree from '@/components/CompareDegree.vue';
 import { useQuery } from '@/composables/useQuery';
 import CompareFaculty from '@/components/CompareFaculty.vue';
 import PlayBar from '@/components/PlayBar.vue';
 import { getSemesterFromDegrees } from '@/utils/semester';
 
-const { left, right } = useQuery({ left: 0, right: 0 });
+const { left, right } = useQuery({ left: -1, right: -1 });
 
 const leftDegree = computed(() =>
   faculties
@@ -27,6 +27,12 @@ const rightDegree = computed(() =>
 const rightFaculty = computed(() =>
   faculties.find((f) => f.number === right.value)
 );
+
+const faculty = { name: 'HS Bremen', number: 0, degrees };
+const hsb = {
+  f: { name: 'HS Bremen', number: 0 },
+  ...sumDegreesAllYears(faculty)
+};
 
 const years = computed<Semester[]>(() =>
   getSemesterFromDegrees(
@@ -58,6 +64,12 @@ const year = ref<Semester>(years.value[years.value.length - 1]);
       :year="year"
       class="degree"
     />
+    <CompareDegree
+      v-else-if="left === -1"
+      :year="year"
+      :degree="hsb"
+      class="degree"
+    />
     <div v-else class="col-span-2">
       <h2 class="hidden md:block">
         Wähle links einen <span class="font-bold">Studiengang</span><br />
@@ -79,6 +91,12 @@ const year = ref<Semester>(years.value[years.value.length - 1]);
       v-else-if="rightFaculty"
       :faculty="rightFaculty"
       :year="year"
+      class="degree"
+    />
+    <CompareDegree
+      v-else-if="right === -1"
+      :year="year"
+      :degree="hsb"
       class="degree"
     />
     <div v-else class="col-span-2">

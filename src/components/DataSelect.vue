@@ -20,6 +20,21 @@ const selected = defineModel('selected', { default: 0 });
     :class="{ 'text-right': right }"
   >
     <VaAccordion stateful>
+      <VaCollapse>
+        <template #header-content>
+          <a href="#" @click.prevent="() => (selected = -1)">
+            <h3
+              class="text-xl font-bold hover:underline"
+              :class="{
+                underline: selected === -1,
+                italic: selectedFaculty === -1
+              }"
+            >
+              HSB
+            </h3></a
+          >
+        </template>
+      </VaCollapse>
       <VaCollapse v-for="(faculty, i) in faculties" :key="`f-${i}`">
         <template #header-content>
           <a href="#" @click.prevent="() => (selected = faculty.number)">

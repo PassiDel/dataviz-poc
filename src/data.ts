@@ -144,8 +144,12 @@ const DegreeHistoryKeys = [
   'total',
   'femaleGerman',
   'maleGerman',
+  'totalGerman',
   'totalForeign',
-  'totalGerman'
+  'diverseGerman',
+  'diverseForeign',
+  'maleForeign',
+  'femaleForeign'
 ] as const;
 
 export function sumDegrees(
@@ -203,7 +207,11 @@ export function sumDegreesAllYears(faculty: (typeof faculties)[0]): DegreeData {
               femaleGerman: 0,
               maleGerman: 0,
               totalGerman: 0,
-              totalForeign: 0
+              totalForeign: 0,
+              diverseGerman: 0,
+              diverseForeign: 0,
+              maleForeign: 0,
+              femaleForeign: 0
             }
           };
           fd.semester.push(year);
