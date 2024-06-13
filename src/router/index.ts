@@ -22,14 +22,14 @@ const router = createRouter({
       component: () => import('../views/CompareDegreesView.vue')
     },
     {
-      path: '/faculty',
-      name: 'faculty',
-      component: () => import('../views/CompareFacultiesView.vue')
-    },
-    {
       path: '/university',
       name: 'university',
       component: () => import('../views/UniView.vue')
+    },
+    {
+      path: '/graph',
+      name: 'graph',
+      component: () => import('../views/GraphView.vue')
     }
   ]
 });

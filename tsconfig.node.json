@@ -5,7 +5,10 @@
     "vitest.config.*",
     "cypress.config.*",
     "nightwatch.conf.*",
-    "playwright.config.*"
+    "playwright.config.*",
+    "src/data.ts",
+    "src/transform.ts",
+    "src/assets/daten.json"
   ],
   "compilerOptions": {
     "composite": true,

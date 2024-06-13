@@ -1,55 +1,74 @@
 <script setup lang="ts">
-import { faculties } from '@/data';
+import { degreeIcon, faculties } from '@/data';
 
-const { hideDegrees, right } = withDefaults(
+const props = withDefaults(
   defineProps<{
-    hideDegrees?: boolean;
     right?: boolean;
+    selectedFaculty?: number;
   }>(),
   {
-    hideDegrees: false,
     right: false
   }
 );
 
-const selected = defineModel('selected', { default: '' });
+const selected = defineModel('selected', { default: 0 });
 </script>
 
 <template>
-  <div class="flex flex-col gap-7" :class="{ 'text-right': right }">
-    <div v-for="(faculty, i) in faculties" :key="`f-${i}`">
-      <a
-        href="#"
-        v-if="hideDegrees"
-        @click.prevent="() => (selected = faculty.name)"
-      >
-        <h3 class="font-bold" :class="{ underline: selected === faculty.name }">
-          {{ faculty.name }}
-        </h3></a
-      >
-      <h3 v-else class="font-bold">{{ faculty.name }}</h3>
-
-      <div v-if="!hideDegrees" class="flex flex-col">
-        <div v-for="(degree, j) in faculty.degrees" :key="`d-${i}-${j}`">
-          <a
-            href="#"
-            v-if="!hideDegrees"
-            @click.prevent="() => (selected = degree.slug)"
-          >
-            <h4
+  <div
+    class="flex h-full flex-col gap-7 overflow-y-auto"
+    :class="{ 'text-right': right }"
+  >
+    <VaAccordion stateful>
+      <VaCollapse>
+        <template #header-content>
+          <a href="#" @click.prevent="() => (selected = -1)">
+            <h3
+              class="text-xl font-bold hover:underline"
               :class="{
-                underline: selected === degree.slug,
-                'pl-2': !right,
-                'pr-3': right
+                underline: selected === -1,
+                italic: selectedFaculty === -1
               }"
             >
-              {{ degree.name }}
-            </h4></a
+              HSB
+            </h3></a
           >
-          <h4 v-else class="pl-2">{{ degree.name }}</h4>
-        </div>
-      </div>
-    </div>
+        </template>
+      </VaCollapse>
+      <VaCollapse v-for="(faculty, i) in faculties" :key="`f-${i}`">
+        <template #header-content>
+          <a href="#" @click.prevent="() => (selected = faculty.number)">
+            <h3
+              class="font-bold hover:underline"
+              :class="{
+                underline: selected === faculty.number,
+                italic: selectedFaculty === faculty.number
+              }"
+            >
+              {{ faculty.name }}
+            </h3></a
+          ></template
+        ><template #content>
+          <div class="flex flex-col">
+            <div v-for="(degree, j) in faculty.degrees" :key="`d-${i}-${j}`">
+              <a href="#" @click.prevent="() => (selected = degree.number)">
+                <h4
+                  class="hover:underline"
+                  :class="{
+                    underline: selected === degree.number,
+                    'pl-2': !right,
+                    'pr-3': right
+                  }"
+                >
+                  <VaIcon v-if="!right" :name="degreeIcon(degree)" />
+                  {{ degree.name }}
+                  <VaIcon v-if="right" :name="degreeIcon(degree)" /></h4
+              ></a>
+            </div>
+          </div>
+        </template>
+      </VaCollapse>
+    </VaAccordion>
   </div>
 </template>
 
