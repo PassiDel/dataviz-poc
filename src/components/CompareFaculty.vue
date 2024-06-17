@@ -31,7 +31,7 @@ const degrees = computed(() => sumDegreesAllYears(props.faculty));
     <h2>{{ faculty.name }}</h2>
     <hr class="h-0.5 bg-primary" />
     <GenderNationality :degree="degree" :year="year" />
-    <div class="my-2 grid h-36 grid-flow-col grid-cols-2 grid-rows-3 gap-2">
+    <div class="my-2 grid min-h-36 grid-flow-col grid-cols-2 grid-rows-3 gap-2">
       <h3>{{ computedValues.sumDegrees }} Studiengänge</h3>
       <h3>{{ computedValues.sum.toLocaleString('de') }} Studis</h3>
       <h3>

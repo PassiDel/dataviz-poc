@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue';
 import type { Semester } from '@/data';
+import { useBreakpoint } from 'vuestic-ui';
 
 const props = defineProps<{
   years: Semester[];
 }>();
+
+const breakpoint = useBreakpoint();
 
 let interval = ref(-1);
 const selected = defineModel<Semester>();
@@ -54,12 +57,12 @@ onUnmounted(() => clearInterval(interval.value));
           @click="() => (running = !running)"
       /></template>
       <template #prepend>
-        <VaChip size="small">
+        <VaChip size="small" v-if="breakpoint.mdUp">
           {{ years[0] }}
         </VaChip>
       </template>
       <template #append>
-        <VaChip size="small">
+        <VaChip size="small" v-if="breakpoint.mdUp">
           {{ years[years.length - 1] }}
         </VaChip>
       </template>

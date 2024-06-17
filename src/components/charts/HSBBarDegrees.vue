@@ -77,20 +77,22 @@ function degreeToData(degree: DegreeData) {
 </script>
 
 <template>
-  <ChartDownload>
-    <Bar
-      :options="chartOptions"
-      :data="{
-        labels: [1, 2, 3, 4, 5],
-        datasets: degrees.map((d) => ({
-          label: d.name,
-          data: degreeToData(d),
-          order: -getTotalStudents(d)
-          // backgroundColor: BORDER_COLORS[campus.indexOf(d.campus) || 0]
-        }))
-      }"
-    ></Bar>
-  </ChartDownload>
+  <div class="h-[400px] pb-12 md:h-full">
+    <ChartDownload>
+      <Bar
+        :options="chartOptions"
+        :data="{
+          labels: [1, 2, 3, 4, 5],
+          datasets: degrees.map((d) => ({
+            label: d.name,
+            data: degreeToData(d),
+            order: -getTotalStudents(d)
+            // backgroundColor: BORDER_COLORS[campus.indexOf(d.campus) || 0]
+          }))
+        }"
+      ></Bar>
+    </ChartDownload>
+  </div>
 </template>
 
 <style scoped></style>

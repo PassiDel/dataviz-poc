@@ -66,14 +66,16 @@ const selectRight = ref(0);
       <HSBBarDegrees />
     </div>
   </div>
-  <div class="mx-auto mt-4 w-fit text-2xl">
+  <div
+    class="mx-auto mt-4 flex w-fit flex-col items-center gap-2 text-2xl md:block"
+  >
     Vergleiche
     <AnimatedSelection v-model:selected="selectLeft" :options="options" />
     mit
     <AnimatedSelection v-model:selected="selectRight" :options="options" />
     <VaButton
       icon="open_in_new"
-      class="ml-4"
+      class="mb-12 w-24 md:ml-4"
       :to="`/compare?left=${selectLeft}&right=${selectRight}`"
     />
   </div>

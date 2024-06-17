@@ -39,6 +39,7 @@ const semster = computed(() => sortSemesterData(props.degree.semester));
 
 const chartOptions = computed<ChartOptions<'line'>>(() => ({
   responsive: true,
+  maintainAspectRatio: false,
   interaction: {
     axis: 'xy',
     mode: 'index'
@@ -96,40 +97,42 @@ watch(props, () => {
 </script>
 
 <template>
-  <ChartDownload>
-    <Line
-      ref="line"
-      :options="chartOptions"
-      :data="{
-        labels: semster.map((s) => s.semester),
-        datasets: [
-          {
-            label: 'Insgesamt',
-            data: semster.map((s) => s.data.total || 0),
-            backgroundColor: BACKGROUND_COLORS[7],
-            borderColor: BORDER_COLORS[7]
-          },
-          {
-            label: categoryMap.femaleGerman,
-            data: semster.map((s) => s.data.femaleGerman || 0),
-            backgroundColor: BACKGROUND_COLORS[6],
-            borderColor: BORDER_COLORS[6]
-          },
-          {
-            label: categoryMap.maleGerman,
-            data: semster.map((s) => s.data.maleGerman || 0),
-            backgroundColor: BACKGROUND_COLORS[0],
-            borderColor: BORDER_COLORS[0]
-          },
-          {
-            label: categoryMap.diverseGerman,
-            data: semster.map((s) => s.data.diverseGerman || 0),
-            backgroundColor: BACKGROUND_COLORS[2],
-            borderColor: BORDER_COLORS[2]
-          }
-        ]
-      }"
-  /></ChartDownload>
+  <div class="h-[400px] pb-12">
+    <ChartDownload>
+      <Line
+        ref="line"
+        :options="chartOptions"
+        :data="{
+          labels: semster.map((s) => s.semester),
+          datasets: [
+            {
+              label: 'Insgesamt',
+              data: semster.map((s) => s.data.total || 0),
+              backgroundColor: BACKGROUND_COLORS[7],
+              borderColor: BORDER_COLORS[7]
+            },
+            {
+              label: categoryMap.femaleGerman,
+              data: semster.map((s) => s.data.femaleGerman || 0),
+              backgroundColor: BACKGROUND_COLORS[6],
+              borderColor: BORDER_COLORS[6]
+            },
+            {
+              label: categoryMap.maleGerman,
+              data: semster.map((s) => s.data.maleGerman || 0),
+              backgroundColor: BACKGROUND_COLORS[0],
+              borderColor: BORDER_COLORS[0]
+            },
+            {
+              label: categoryMap.diverseGerman,
+              data: semster.map((s) => s.data.diverseGerman || 0),
+              backgroundColor: BACKGROUND_COLORS[2],
+              borderColor: BORDER_COLORS[2]
+            }
+          ]
+        }"
+    /></ChartDownload>
+  </div>
 </template>
 
 <style scoped></style>
