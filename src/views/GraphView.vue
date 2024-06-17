@@ -61,7 +61,7 @@ const selectOptions = [
   'semester.0.data.maleBeginner',
   'semester.0.data.femaleBeginner',
   'semester.0.data.diverseBeginner'
-].map((o) => ({ v: o as Keys }));
+].map((o) => ({ v: o as Keys, icon: keyIcon(o) }));
 
 const keys = computed<{ x: Keys; y: Keys }>(() => ({
   x: selectOptions[x.value]?.v || selectOptions[0].v,
@@ -125,6 +125,37 @@ watch(keys, () => {
   // really rally ugly, but it works
   nextTick(() => scatter.value?.chart.update());
 });
+
+function keyEmoji(k: string) {
+  switch (k.split(' ')[0]) {
+    case 'Deutsch':
+      return '🇩🇪 ';
+    case 'Ausländisch':
+      return '🌎 ';
+    case 'Urlaub':
+      return '🏖️ ';
+    case 'StuAnf':
+      return '👶 ';
+  }
+
+  return '';
+}
+function keyIcon(k: string) {
+  if (k.includes('total')) {
+    return 'custom-all';
+  }
+  if (k.includes('female')) {
+    return 'custom-female';
+  }
+  if (k.includes('male')) {
+    return 'custom-male';
+  }
+  if (k.includes('diverse')) {
+    return 'custom-diverse';
+  }
+
+  return '';
+}
 </script>
 
 <template>
@@ -158,7 +189,7 @@ watch(keys, () => {
         value-by="v"
         :group-by="
           (k: (typeof selectOptions)[0]) =>
-            k.v.startsWith('semester.0.data.') ? 'Daten' : 'Meta'
+            keyEmoji(keyLabel(k.v)) + keyLabel(k.v).split(' ')[0]
         "
         searchable
       />
@@ -251,7 +282,24 @@ watch(keys, () => {
               },
               title: {
                 display: true,
-                text: 'Alle Studiengänge'
+                text: 'Alle Studiengänge',
+                padding: {
+                  top: 20,
+                  bottom: 10
+                },
+                font: {
+                  size: 20
+                }
+              },
+              legend: {
+                labels: {
+                  boxWidth: 12,
+                  boxHeight: 12,
+                  color: 'black',
+                  font: {
+                    size: 15
+                  }
+                }
               }
             }
           }"

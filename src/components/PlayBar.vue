@@ -38,6 +38,7 @@ onUnmounted(() => clearInterval(interval.value));
     class="fixed bottom-3 left-0 right-0 mx-2 rounded-2xl bg-gray-400 p-3 text-white md:mx-auto md:w-3/6"
   >
     <VaSlider
+      color="textInverted"
       :model-value="Math.max(years.indexOf(selected || 'WiSe1000'), 0)"
       @update:modelValue="(newValue) => (selected = years[newValue])"
       :max="years.length - 1"
@@ -53,12 +54,12 @@ onUnmounted(() => clearInterval(interval.value));
           @click="() => (running = !running)"
       /></template>
       <template #prepend>
-        <VaChip color="warning" size="small">
+        <VaChip size="small">
           {{ years[0] }}
         </VaChip>
       </template>
       <template #append>
-        <VaChip color="warning" size="small">
+        <VaChip size="small">
           {{ years[years.length - 1] }}
         </VaChip>
       </template>

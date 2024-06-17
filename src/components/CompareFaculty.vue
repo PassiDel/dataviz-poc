@@ -56,7 +56,7 @@ const degrees = computed(() => sumDegreesAllYears(props.faculty));
     </div>
     <hr class="h-0.5 bg-primary" />
     <DegreeHistoryGender :degree="degrees" :year="year" />
-    <hr class="h-0.5 bg-primary" />
+    <hr class="mt-2 h-0.5 bg-primary" />
     <DegreeHistoryForeign :degree="degrees" :year="year" />
   </div>
 </template>

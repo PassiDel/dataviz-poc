@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 import { ref } from 'vue';
 import ChartDownload from '@/components/ChartDownload.vue';
+import { BORDER_COLORS } from '@/utils/HSBColors';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 defineProps<{
@@ -23,6 +24,12 @@ const chartOptions = ref({
   plugins: {
     legend: {
       labels: {
+        boxWidth: 12,
+        boxHeight: 12,
+        color: 'black',
+        font: {
+          size: 15
+        },
         generateLabels: function (chart) {
           // Get the default label list
           const original =
@@ -80,7 +87,15 @@ const chartOptions = ref({
     },
     title: {
       display: true,
-      text: 'Geschlechterverteilung nach Herkunft'
+      text: 'Geschlechterverteilung nach Herkunft',
+      padding: {
+        top: 20,
+        bottom: 10
+      },
+      font: {
+        size: 20
+      },
+      color: 'black'
     }
   }
 } satisfies ChartOptions<'pie'>);
@@ -107,7 +122,14 @@ function dataset(d: DegreeData, y: Semester = LATEST_YEAR) {
         semester.data.maleForeign,
         semester.data.femaleForeign
       ].map((v) => v || 0),
-      backgroundColor: ['red', 'blue', 'green', 'green', 'blue', 'red']
+      backgroundColor: [
+        BORDER_COLORS[6],
+        BORDER_COLORS[0],
+        BORDER_COLORS[2],
+        BORDER_COLORS[2],
+        BORDER_COLORS[0],
+        BORDER_COLORS[6]
+      ]
     }
   ];
 }
@@ -124,9 +146,9 @@ function dataset(d: DegreeData, y: Semester = LATEST_YEAR) {
 
           'Weiblich',
           'Männlich',
-          'NB',
+          'Divers',
 
-          'NB',
+          'Divers',
           'Männlich',
           'Weiblich'
         ],

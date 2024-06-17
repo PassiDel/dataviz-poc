@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { getCurrentInstance, inject, onMounted, ref } from 'vue';
-import { Chart as ChartJS } from 'chart.js';
 import { HIDE_BUTTONS } from '@/symbols';
 
-ChartJS.defaults.font.family = 'Zilla Slab';
 const instance = getCurrentInstance();
 
 withDefaults(
@@ -45,7 +43,13 @@ function copy() {
 
 <template>
   <slot />
-  <VaButtonGroup :disabled="!canvas" v-if="!(hideButtons || hideButtonsInj)">
+  <VaButtonGroup
+    preset="secondary"
+    border-color="#000000"
+    :disabled="!canvas"
+    color="#000000"
+    v-if="!(hideButtons || hideButtonsInj)"
+  >
     <VaButton
       icon="download"
       @click="download"

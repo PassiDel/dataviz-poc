@@ -65,7 +65,25 @@ const chartOptions = computed<ChartOptions<'line'>>(() => ({
     },
     title: {
       display: true,
-      text: 'Anzahl Studis nach Geschlecht über Semester'
+      text: 'Anzahl Studis nach Geschlecht über Semester',
+      padding: {
+        top: 20,
+        bottom: 10
+      },
+      font: {
+        size: 20
+      },
+      color: 'black'
+    },
+    legend: {
+      labels: {
+        boxWidth: 12,
+        boxHeight: 12,
+        color: 'black',
+        font: {
+          size: 15
+        }
+      }
     }
   }
 }));

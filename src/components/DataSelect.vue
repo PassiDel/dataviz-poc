@@ -21,33 +21,60 @@ const selected = defineModel('selected', { default: 0 });
   >
     <VaAccordion stateful>
       <VaCollapse>
-        <template #header-content>
-          <a href="#" @click.prevent="() => (selected = -1)">
-            <h3
-              class="text-xl font-bold hover:underline"
-              :class="{
-                underline: selected === -1,
-                italic: selectedFaculty === -1
-              }"
-            >
-              HSB
-            </h3></a
+        <template #header="{ attributes }">
+          <div
+            v-bind="attributes"
+            class="va-collapse__header"
+            :class="selected === -1 ? 'test' : undefined"
+            @click="() => (selected = -1)"
           >
+            <a href="#" @click.prevent="() => (selected = -1)">
+              <h3
+                class="text-xl font-bold hover:underline"
+                :class="{
+                  underline: selected === -1,
+                  italic: selectedFaculty === -1
+                }"
+              >
+                HSB
+              </h3></a
+            >
+          </div>
         </template>
       </VaCollapse>
       <VaCollapse v-for="(faculty, i) in faculties" :key="`f-${i}`">
-        <template #header-content>
-          <a href="#" @click.prevent="() => (selected = faculty.number)">
-            <h3
-              class="font-bold hover:underline"
-              :class="{
-                underline: selected === faculty.number,
-                italic: selectedFaculty === faculty.number
-              }"
+        <template #header="{ value, attributes }">
+          <div
+            v-bind="attributes"
+            class="va-collapse__header"
+            :class="
+              selectedFaculty === faculty.number || selected === faculty.number
+                ? 'test'
+                : undefined
+            "
+          >
+            <a href="#" @click.prevent="() => (selected = faculty.number)">
+              <h3
+                class="font-bold hover:underline"
+                :class="{
+                  'italic underline': selected === faculty.number
+                }"
+              >
+                {{ faculty.name }}
+              </h3></a
             >
-              {{ faculty.name }}
-            </h3></a
-          ></template
+            <va-icon
+              class="va-collapse__expand-icon"
+              name="va-arrow-down"
+              :class="
+                value
+                  ? 'va-collapse__expand-icon--expanded'
+                  : 'va-collapse__expand-icon--collapsed'
+              "
+            />
+          </div>
+        </template>
+        <template #header-content> </template
         ><template #content>
           <div class="flex flex-col">
             <div v-for="(degree, j) in faculty.degrees" :key="`d-${i}-${j}`">
@@ -55,7 +82,7 @@ const selected = defineModel('selected', { default: 0 });
                 <h4
                   class="hover:underline"
                   :class="{
-                    underline: selected === degree.number,
+                    'font-bold': selected === degree.number,
                     'pl-2': !right,
                     'pr-3': right
                   }"
@@ -72,4 +99,9 @@ const selected = defineModel('selected', { default: 0 });
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.test {
+  @apply text-white;
+  background: linear-gradient(to right, rgb(10, 85, 140), rgb(50, 180, 200));
+}
+</style>

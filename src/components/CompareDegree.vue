@@ -55,7 +55,7 @@ defineProps<{
     </div>
     <hr class="h-0.5 bg-primary" />
     <DegreeHistoryGender :degree="degree" :year="year" />
-    <hr class="h-0.5 bg-primary" />
+    <hr class="mt-2 h-0.5 bg-primary" />
     <DegreeHistoryForeign :degree="degree" :year="year" />
   </div>
 </template>

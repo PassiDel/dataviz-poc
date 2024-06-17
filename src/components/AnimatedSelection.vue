@@ -41,7 +41,7 @@ const selected = defineModel<number>('selected', { default: 0 });
 
 <template>
   <div
-    class="inline-block h-[1.5em] overflow-hidden border-b-2 border-primary px-4 text-center align-sub leading-[1.5em]"
+    class="mb-[-4px] inline-block h-[1.5em] overflow-hidden border-b-2 border-primary px-4 text-center align-sub leading-[1.5em]"
   >
     <ul
       :style="{ 'margin-top': `-${i * 1.5}em` }"
