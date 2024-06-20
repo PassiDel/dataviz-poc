@@ -16,12 +16,15 @@ import {
   campusMap,
   categoryMap,
   type DegreeData,
+  degreeIcon,
   degreeKeyMap,
+  degrees,
   faculties,
   type SemesterDataCategories
 } from '@/data';
 import { useQuery } from '@/composables/useQuery';
 import HSBColors from '@/utils/HSBColors';
+import DegreeType from '@/components/DegreeType.vue';
 
 ChartJS.register(
   LinearScale,
@@ -32,6 +35,13 @@ ChartJS.register(
   HSBColors,
   Title
 );
+
+const highlightOptions = degrees.map(({ semester, ...d }) => ({
+  ...d,
+  icon: degreeIcon({ ...d, semester })
+}));
+
+highlightOptions.sort((a, b) => a.faculty - b.faculty);
 
 type Keys =
   | keyof Omit<DegreeData, 'semester'>
@@ -120,8 +130,14 @@ function label(degree: DegreeData, key: Keys) {
   return `${keyLabel(key)}: ${valueString}`;
 }
 
+const highlight = ref<DegreeData[]>([]);
+
 const scatter = ref<{ chart: ChartJS }>();
 watch(keys, () => {
+  // really rally ugly, but it works
+  nextTick(() => scatter.value?.chart.update());
+});
+watch(highlight, () => {
   // really rally ugly, but it works
   nextTick(() => scatter.value?.chart.update());
 });
@@ -205,10 +221,34 @@ function keyIcon(k: string) {
         value-by="v"
         :group-by="
           (k: (typeof selectOptions)[0]) =>
-            k.v.startsWith('semester.0.data.') ? 'Daten' : 'Meta'
+            keyEmoji(keyLabel(k.v)) + keyLabel(k.v).split(' ')[0]
         "
         searchable
       />
+      <VaSelect
+        v-model="highlight"
+        track-by="number"
+        text-by="name"
+        :group-by="(k: (typeof highlightOptions)[0]) => `Fakultät ${k.faculty}`"
+        label="Hervorheben"
+        placeholder="Studiengänge auswählen..."
+        :options="highlightOptions"
+        clearable
+        multiple
+        searchable
+      >
+        <template #content="{ value }">
+          <div class="flex flex-wrap">
+            <DegreeType
+              v-for="chip in value"
+              :key="chip"
+              :type="chip.type"
+              class="m-1"
+              ><span class="text-black"> {{ chip.short }}</span>
+            </DegreeType>
+          </div>
+        </template></VaSelect
+      >
     </div>
     <div class="overscroll-y-none md:col-span-3">
       <ChartDownload
@@ -223,7 +263,27 @@ function keyIcon(k: string) {
             },
             elements: {
               point: {
-                radius: 6
+                hoverRadius: 15,
+                pointStyle(ctx) {
+                  const deg =
+                    ctx.raw as (typeof data.value.datasets)[0]['data'][0];
+
+                  return (highlight as unknown as DegreeData[])?.some(
+                    (h) => h.number === deg.number
+                  )
+                    ? 'rectRounded'
+                    : 'circle';
+                },
+                radius(ctx) {
+                  const deg =
+                    ctx.raw as (typeof data.value.datasets)[0]['data'][0];
+
+                  return (highlight as unknown as DegreeData[])?.some(
+                    (h) => h.number === deg.number
+                  )
+                    ? 12
+                    : 6;
+                }
               }
             },
             scales: {

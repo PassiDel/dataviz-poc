@@ -4,6 +4,7 @@ import GenderNationality from '@/components/charts/GenderNationality.vue';
 import DegreeType from '@/components/DegreeType.vue';
 import DegreeHistoryGender from '@/components/charts/DegreeHistoryGender.vue';
 import DegreeHistoryForeign from '@/components/charts/DegreeHistoryForeign.vue';
+import DegreeHistoryGenderBeginner from '@/components/charts/DegreeHistoryGenderBeginner.vue';
 
 defineProps<{
   degree: DegreeData & {
@@ -57,6 +58,8 @@ defineProps<{
     <DegreeHistoryGender :degree="degree" :year="year" />
     <hr class="mt-2 h-0.5 bg-primary" />
     <DegreeHistoryForeign :degree="degree" :year="year" />
+    <hr class="mt-2 h-0.5 bg-primary" />
+    <DegreeHistoryGenderBeginner :degree="degree" :year="year" />
   </div>
 </template>
 

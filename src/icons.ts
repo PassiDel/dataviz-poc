@@ -11,7 +11,6 @@ export const icons = createIconsConfig({
     {
       name: 'custom-{name}',
       resolve({ name }) {
-        console.log(name);
         if (!(name in iconMap)) {
           return {};
         }
