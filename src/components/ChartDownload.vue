@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getCurrentInstance, inject, onMounted, ref } from 'vue';
 import { HIDE_BUTTONS } from '@/symbols';
+import { useToast } from 'vuestic-ui';
 
 const instance = getCurrentInstance();
 
@@ -10,6 +11,8 @@ withDefaults(
   }>(),
   { hideButtons: false }
 );
+
+const { init } = useToast();
 
 const hideButtonsInj = inject(HIDE_BUTTONS, false);
 
@@ -22,6 +25,11 @@ function download(e: Event) {
   if (!canvas.value || !e.currentTarget) {
     return;
   }
+  init({
+    color: 'success',
+    title: 'Grafik heruntergeladen!',
+    message: 'Die Grafik wurde erfolgreich exportiert!'
+  });
   (e.currentTarget as HTMLAnchorElement).href =
     canvas.value.toDataURL('image/png');
 }
@@ -32,11 +40,20 @@ function copy() {
   canvas.value.toBlob(
     async (b) =>
       b &&
-      (await navigator.clipboard.write([
-        new ClipboardItem({
-          'image/png': b
-        })
-      ]))
+      (await navigator.clipboard
+        .write([
+          new ClipboardItem({
+            'image/png': b
+          })
+        ])
+        .then(() =>
+          init({
+            color: 'success',
+            title: 'Grafik kopiert!',
+            message:
+              'Die Grafik wurde erfolgreich in die Zwischenablage kopiert!'
+          })
+        ))
   );
 }
 </script>
