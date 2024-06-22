@@ -23,9 +23,15 @@ defineProps<{
       <p class="text-xl font-bold">
         {{ degree.short }}
       </p>
-      <DegreeType :type="degree.type" class="mr-auto" />
+      <DegreeType
+        v-if="degree.f.number > 0"
+        :type="degree.type"
+        class="mr-auto"
+      />
+      <p v-else></p>
 
-      <p>Fakultät {{ degree.f.number }}</p>
+      <p v-if="degree.f.number > 0">Fakultät {{ degree.f.number }}</p>
+      <p v-else>5 Fakultäten</p>
       <p>Standort: {{ campusMap(degree.campus) || '' }}</p>
       <p>
         Erfasster Zeitraum:<br />

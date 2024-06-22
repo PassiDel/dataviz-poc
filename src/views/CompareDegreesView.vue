@@ -31,7 +31,8 @@ const rightFaculty = computed(() =>
 const faculty = { name: 'HS Bremen', number: 0, degrees };
 const hsb = {
   f: { name: 'HS Bremen', number: 0 },
-  ...sumDegreesAllYears(faculty)
+  ...sumDegreesAllYears(faculty),
+  short: 'HSB'
 };
 
 const years = computed<Semester[]>(() =>
