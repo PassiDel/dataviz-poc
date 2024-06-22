@@ -970,7 +970,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 5,
           "maleBeginner": 3,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -1421,7 +1421,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 34,
           "maleBeginner": 19,
           "femaleBeginner": 15,
           "diverseBeginner": 0
@@ -1872,7 +1872,7 @@
           "malePause": 0,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 33,
           "maleBeginner": 14,
           "femaleBeginner": 19,
           "diverseBeginner": 0
@@ -2323,7 +2323,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 15,
           "maleBeginner": 12,
           "femaleBeginner": 3,
           "diverseBeginner": 0
@@ -2774,7 +2774,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 14,
           "maleBeginner": 12,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -2939,7 +2939,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 14,
           "maleBeginner": 13,
           "femaleBeginner": 1,
           "diverseBeginner": 0
@@ -3082,7 +3082,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 5,
           "maleBeginner": 4,
           "femaleBeginner": 1,
           "diverseBeginner": 0
@@ -4435,7 +4435,7 @@
           "malePause": 0,
           "femalePause": 3,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 33,
           "maleBeginner": 21,
           "femaleBeginner": 12,
           "diverseBeginner": 0
@@ -4886,7 +4886,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 4,
           "maleBeginner": 2,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -5337,7 +5337,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 63,
           "maleBeginner": 61,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -5788,7 +5788,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 14,
           "maleBeginner": 12,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -6371,7 +6371,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 16,
           "maleBeginner": 11,
           "femaleBeginner": 5,
           "diverseBeginner": 0
@@ -6492,7 +6492,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 7,
           "maleBeginner": 6,
           "femaleBeginner": 1,
           "diverseBeginner": 0
@@ -6745,7 +6745,7 @@
           "malePause": 0,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 30,
           "maleBeginner": 24,
           "femaleBeginner": 6,
           "diverseBeginner": 0
@@ -7339,7 +7339,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 12,
           "maleBeginner": 7,
           "femaleBeginner": 5,
           "diverseBeginner": 0
@@ -7790,7 +7790,7 @@
           "malePause": 4,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 62,
           "maleBeginner": 58,
           "femaleBeginner": 4,
           "diverseBeginner": 0
@@ -8241,7 +8241,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 14,
           "maleBeginner": 12,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -8692,7 +8692,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 11,
           "maleBeginner": 10,
           "femaleBeginner": 1,
           "diverseBeginner": 0
@@ -9143,7 +9143,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 68,
           "maleBeginner": 48,
           "femaleBeginner": 20,
           "diverseBeginner": 0
@@ -9594,7 +9594,7 @@
           "malePause": 0,
           "femalePause": 2,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 14,
           "maleBeginner": 0,
           "femaleBeginner": 14,
           "diverseBeginner": 0
@@ -10045,7 +10045,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 13,
           "maleBeginner": 11,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -10496,7 +10496,7 @@
           "malePause": 2,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 51,
           "maleBeginner": 48,
           "femaleBeginner": 3,
           "diverseBeginner": 0
@@ -10947,7 +10947,7 @@
           "malePause": 0,
           "femalePause": 2,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 48,
           "maleBeginner": 44,
           "femaleBeginner": 4,
           "diverseBeginner": 0
@@ -11398,7 +11398,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 18,
           "maleBeginner": 16,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -12003,7 +12003,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 19,
           "maleBeginner": 14,
           "femaleBeginner": 5,
           "diverseBeginner": 0
@@ -12300,7 +12300,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 40,
           "maleBeginner": 40,
           "femaleBeginner": 0,
           "diverseBeginner": 0
@@ -12597,7 +12597,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 9,
           "maleBeginner": 0,
           "femaleBeginner": 9,
           "diverseBeginner": 0
@@ -12938,7 +12938,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 10,
           "maleBeginner": 9,
           "femaleBeginner": 1,
           "diverseBeginner": 0
@@ -13389,7 +13389,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 14,
           "maleBeginner": 10,
           "femaleBeginner": 4,
           "diverseBeginner": 0
@@ -13840,7 +13840,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 28,
           "maleBeginner": 25,
           "femaleBeginner": 3,
           "diverseBeginner": 0
@@ -14291,7 +14291,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 55,
           "maleBeginner": 12,
           "femaleBeginner": 43,
           "diverseBeginner": 0
@@ -14742,7 +14742,7 @@
           "malePause": 2,
           "femalePause": 11,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 131,
           "maleBeginner": 31,
           "femaleBeginner": 100,
           "diverseBeginner": 0
@@ -15193,7 +15193,7 @@
           "malePause": 0,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 49,
           "maleBeginner": 22,
           "femaleBeginner": 27,
           "diverseBeginner": 0
@@ -15754,7 +15754,7 @@
           "malePause": 0,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 9,
           "maleBeginner": 0,
           "femaleBeginner": 9,
           "diverseBeginner": 0
@@ -15875,7 +15875,7 @@
           "malePause": 0,
           "femalePause": 3,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 42,
           "maleBeginner": 0,
           "femaleBeginner": 42,
           "diverseBeginner": 0
@@ -16040,7 +16040,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 26,
           "maleBeginner": 4,
           "femaleBeginner": 22,
           "diverseBeginner": 0
@@ -16480,7 +16480,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 24,
           "maleBeginner": 3,
           "femaleBeginner": 21,
           "diverseBeginner": 0
@@ -16821,7 +16821,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 27,
           "maleBeginner": 8,
           "femaleBeginner": 19,
           "diverseBeginner": 0
@@ -17657,7 +17657,7 @@
           "malePause": 0,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 37,
           "maleBeginner": 24,
           "femaleBeginner": 13,
           "diverseBeginner": 0
@@ -18108,7 +18108,7 @@
           "malePause": 1,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 98,
           "maleBeginner": 75,
           "femaleBeginner": 23,
           "diverseBeginner": 0
@@ -19109,7 +19109,7 @@
           "malePause": 0,
           "femalePause": 3,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 105,
           "maleBeginner": 35,
           "femaleBeginner": 70,
           "diverseBeginner": 0
@@ -19560,7 +19560,7 @@
           "malePause": 1,
           "femalePause": 3,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 40,
           "maleBeginner": 13,
           "femaleBeginner": 27,
           "diverseBeginner": 0
@@ -20011,7 +20011,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 6,
           "maleBeginner": 4,
           "femaleBeginner": 2,
           "diverseBeginner": 0
@@ -20913,7 +20913,7 @@
           "malePause": 1,
           "femalePause": 2,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 18,
           "maleBeginner": 4,
           "femaleBeginner": 14,
           "diverseBeginner": 0
@@ -21364,7 +21364,7 @@
           "malePause": 1,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 22,
           "maleBeginner": 16,
           "femaleBeginner": 6,
           "diverseBeginner": 0
@@ -21815,7 +21815,7 @@
           "malePause": 0,
           "femalePause": 2,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 19,
           "maleBeginner": 12,
           "femaleBeginner": 7,
           "diverseBeginner": 0
@@ -22266,7 +22266,7 @@
           "malePause": 0,
           "femalePause": 2,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 42,
           "maleBeginner": 14,
           "femaleBeginner": 28,
           "diverseBeginner": 0
@@ -22717,7 +22717,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 20,
           "maleBeginner": 16,
           "femaleBeginner": 4,
           "diverseBeginner": 0
@@ -23168,7 +23168,7 @@
           "malePause": 1,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 30,
           "maleBeginner": 23,
           "femaleBeginner": 7,
           "diverseBeginner": 0
@@ -23619,7 +23619,7 @@
           "malePause": 0,
           "femalePause": 3,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 126,
           "maleBeginner": 79,
           "femaleBeginner": 47,
           "diverseBeginner": 0
@@ -24521,7 +24521,7 @@
           "malePause": 0,
           "femalePause": 2,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 43,
           "maleBeginner": 10,
           "femaleBeginner": 33,
           "diverseBeginner": 0
@@ -24972,7 +24972,7 @@
           "malePause": 1,
           "femalePause": 3,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 41,
           "maleBeginner": 28,
           "femaleBeginner": 13,
           "diverseBeginner": 0
@@ -25423,7 +25423,7 @@
           "malePause": 1,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 64,
           "maleBeginner": 30,
           "femaleBeginner": 34,
           "diverseBeginner": 0
@@ -25874,7 +25874,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 34,
           "maleBeginner": 11,
           "femaleBeginner": 23,
           "diverseBeginner": 0
@@ -26325,7 +26325,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 26,
           "maleBeginner": 15,
           "femaleBeginner": 11,
           "diverseBeginner": 0
@@ -26776,7 +26776,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 15,
           "maleBeginner": 8,
           "femaleBeginner": 7,
           "diverseBeginner": 0
@@ -27678,7 +27678,7 @@
           "malePause": 0,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 7,
           "maleBeginner": 2,
           "femaleBeginner": 5,
           "diverseBeginner": 0
@@ -28129,7 +28129,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 21,
           "maleBeginner": 15,
           "femaleBeginner": 6,
           "diverseBeginner": 0
@@ -29438,7 +29438,7 @@
           "malePause": 0,
           "femalePause": 1,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 15,
           "maleBeginner": 8,
           "femaleBeginner": 7,
           "diverseBeginner": 0
@@ -29779,7 +29779,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 6,
           "maleBeginner": 2,
           "femaleBeginner": 4,
           "diverseBeginner": 0
@@ -30120,7 +30120,7 @@
           "malePause": 1,
           "femalePause": 2,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 49,
           "maleBeginner": 17,
           "femaleBeginner": 32,
           "diverseBeginner": 0
@@ -30571,7 +30571,7 @@
           "malePause": 0,
           "femalePause": 0,
           "diversePause": 0,
-          "totalBeginner": 0,
+          "totalBeginner": 25,
           "maleBeginner": 16,
           "femaleBeginner": 9,
           "diverseBeginner": 0
