@@ -104,4 +104,8 @@ const selected = defineModel('selected', { default: 0 });
   @apply text-white;
   background: linear-gradient(to right, rgb(10, 85, 140), rgb(50, 180, 200));
 }
+
+.va-collapse__header {
+  @apply hover:bg-gray-200;
+}
 </style>

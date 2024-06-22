@@ -100,30 +100,54 @@ export function campusMap(short: string, returnNWAsDefault = true) {
 }
 
 export const categoryMap: { [k in SemesterDataCategories]: string } = {
-  total: 'Insgesamt',
-  totalGerman: 'Insgesamt Deutsch',
+  total: 'Studierende',
+  totalGerman: 'Studierende Deutsch',
   maleGerman: 'Deutsch Männlich',
   femaleGerman: 'Deutsch Weiblich',
   diverseGerman: 'Deutsch Divers',
-  totalForeign: 'Insgesamt Ausländisch',
+  totalForeign: 'Studierende Ausländisch',
   maleForeign: 'Ausländisch Männlich',
   femaleForeign: 'Ausländisch Weiblich',
   diverseForeign: 'Ausländisch Divers',
-  totalPause: 'Insgesamt Urlaub',
+  totalPause: 'Studierende Urlaub',
   malePause: 'Urlaub Männlich',
   femalePause: 'Urlaub Weiblich',
   diversePause: 'Urlaub Divers',
-  totalBeginner: 'Insgesamt StuAnf',
-  maleBeginner: 'StuAnf Männlich',
-  femaleBeginner: 'StuAnf Weiblich',
-  diverseBeginner: 'StuAnf Divers'
+  totalBeginner: 'Studierende Studienanfänger',
+  maleBeginner: 'Studienanfänger Männlich',
+  femaleBeginner: 'Studienanfänger Weiblich',
+  diverseBeginner: 'Studienanfänger Divers'
+};
+export const categoryExplainerMap: { [k in SemesterDataCategories]: string } = {
+  total: 'aller Studierenden',
+
+  totalGerman: 'deutscher Studierenden',
+  maleGerman: 'deutscher Studenten',
+  femaleGerman: 'deutscher Studentinnen',
+  diverseGerman: 'deutscher Student*innen',
+
+  totalForeign: 'ausländischer Studierenden',
+  maleForeign: 'ausländischer Studenten',
+  femaleForeign: 'ausländischer Studentinnen',
+  diverseForeign: 'ausländischer Student*innen',
+
+  totalPause: 'beurlaubter Studierenden',
+  malePause: 'beurlaubter Studenten',
+  femalePause: 'beurlaubter Studentinnen',
+  diversePause: 'beurlaubter Student*innen',
+
+  // TODO: better word
+  totalBeginner: 'Studienanfänger',
+  maleBeginner: 'Studienanfänger',
+  femaleBeginner: 'Studienanfängerinnen',
+  diverseBeginner: 'Studienanfänger*innen'
 };
 export const degreeKeyMap: {
   [k in keyof Omit<DegreeData, 'semester'>]: string;
 } = {
-  number: 'Nummer',
+  number: 'Studiengangsnummer',
   name: 'Name',
-  short: 'Kurz',
+  short: 'Kurzbezeichnung',
   faculty: 'Fakultät',
   fak: '(Sub-)Fakultät',
   campus: 'Campus',

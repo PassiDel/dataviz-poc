@@ -14,6 +14,7 @@ import { Scatter } from 'vue-chartjs';
 import { computed, nextTick, ref, watch } from 'vue';
 import {
   campusMap,
+  categoryExplainerMap,
   categoryMap,
   type DegreeData,
   degreeIcon,
@@ -49,7 +50,17 @@ type Keys =
 
 type Groups = keyof Omit<DegreeData, 'semester' | 'short' | 'number' | 'name'>;
 
-const { group, x, y } = useQuery({ group: 'faculty' as Groups, x: 0, y: 2 });
+const dataOptions = [
+  { t: 'Studiengang', v: 'degree', e: 'ein Studiengang' },
+  { t: 'Fakultät', v: 'faculty', e: 'eine Fakultät' }
+];
+
+const { group, x, y, dataset } = useQuery({
+  group: 'faculty' as Groups,
+  x: 0,
+  y: 2,
+  dataset: 'degree'
+});
 
 const selectOptions = [
   'faculty',
@@ -78,6 +89,7 @@ const keys = computed<{ x: Keys; y: Keys }>(() => ({
   y: selectOptions[y.value]?.v || selectOptions[2].v
 }));
 
+// TODO: add faculty as dataset
 const data = computed<ChartData<'scatter', DegreeData[]>>(() => ({
   datasets: faculties
     .flatMap((f) => f.degrees.map((d) => ({ ...d, _fName: f.name })))
@@ -106,22 +118,31 @@ const data = computed<ChartData<'scatter', DegreeData[]>>(() => ({
     )
 }));
 
-const groupOptions = ['faculty', 'fak', 'campus', 'type'].map((o) => ({
-  v: o,
-  t: degreeKeyMap[o as Groups]
-}));
-
-// TODO
-const dataOptions = ['Studiengang', 'Fakultät', 'HSB'].map((o) => ({
-  v: o,
-  t: o
-}));
+const groupOptions = [
+  { v: 'faculty', t: degreeKeyMap.faculty, e: 'die Fakultät' },
+  {
+    v: 'fak',
+    t: degreeKeyMap.fak,
+    e: 'die (Sub-)Fakultät'
+  },
+  {
+    v: 'campus',
+    t: degreeKeyMap.campus,
+    e: 'den Standort'
+  },
+  {
+    v: 'type',
+    t: degreeKeyMap.type,
+    e: 'die Abschlussart'
+  }
+];
 
 function keyLabel(key: Keys) {
   return key.startsWith('semester.0.data.')
     ? categoryMap[key.substring(16) as SemesterDataCategories]
     : degreeKeyMap[key as keyof typeof degreeKeyMap];
 }
+
 function label(degree: DegreeData, key: Keys) {
   const valueString = key.startsWith('semester.0.data.')
     ? degree.semester[0].data[key.substring(16) as SemesterDataCategories]
@@ -130,6 +151,7 @@ function label(degree: DegreeData, key: Keys) {
   return `${keyLabel(key)}: ${valueString}`;
 }
 
+// TODO: add highlights for faculty
 const highlight = ref<DegreeData[]>([]);
 
 const scatter = ref<{ chart: ChartJS }>();
@@ -150,15 +172,16 @@ function keyEmoji(k: string) {
       return '🌎 ';
     case 'Urlaub':
       return '🏖️ ';
-    case 'StuAnf':
+    case 'Studienanfänger':
       return '👶 ';
   }
 
   return '';
 }
+
 function keyIcon(k: string) {
   if (k.includes('total')) {
-    return 'custom-all';
+    return 'person';
   }
   if (k.includes('female')) {
     return 'custom-female';
@@ -177,8 +200,45 @@ function keyIcon(k: string) {
 <template>
   <main class="flex h-full grid-cols-4 flex-col gap-3 p-3 md:grid">
     <div class="flex h-fit flex-col gap-2">
+      <div class="explainer min-h-24">
+        Die Grafik zeigt die
+        <span>{{
+          keys.y.startsWith('semester')
+            ? `Anzahl ${
+                categoryExplainerMap[
+                  keys.y.substring(16) as SemesterDataCategories
+                ]
+              }`
+            : keyLabel(keys.y)
+        }}</span>
+        in Relation
+        <span>{{
+          keys.x.startsWith('semester')
+            ? `zur Anzahl ${
+                categoryExplainerMap[
+                  keys.x.substring(16) as SemesterDataCategories
+                ]
+              }`
+            : `zur ${keyLabel(keys.x)}`
+        }}</span
+        >. Jeder Kreis ist
+        <span>{{ dataOptions.find((d) => d.v === dataset)?.e }}</span> und die
+        Farben stehen für
+        <span>{{ groupOptions.find((g) => g.v === group)?.e }}</span
+        >. Hervorgehoben {{ highlight.length === 1 ? 'ist' : 'sind' }}
+        <span>{{ dataset === 'degree' ? highlight.length : 0 }}</span>
+        {{
+          dataset === 'degree'
+            ? highlight.length === 1
+              ? 'Studiengang'
+              : 'Studiengänge'
+            : highlight.length === 1
+              ? 'Fakultät'
+              : 'Fakultäten'
+        }}.
+      </div>
       <VaSelect
-        v-model="dataOptions[0].v"
+        v-model="dataset"
         label="Datensatz"
         :options="dataOptions"
         class="w-full"
@@ -226,6 +286,7 @@ function keyIcon(k: string) {
         searchable
       />
       <VaSelect
+        v-if="dataset === 'degree'"
         v-model="highlight"
         track-by="number"
         text-by="name"
@@ -247,16 +308,17 @@ function keyIcon(k: string) {
               ><span class="text-black"> {{ chip.short }}</span>
             </DegreeType>
           </div>
-        </template></VaSelect
-      >
+        </template>
+      </VaSelect>
     </div>
-    <div class="overscroll-y-none md:col-span-3">
-      <ChartDownload
-        ><Scatter
+    <div class="mb-12 min-h-[50vh] overscroll-y-none md:col-span-3">
+      <ChartDownload>
+        <Scatter
           ref="scatter"
           :data="data as any"
           :options="{
             responsive: true,
+            maintainAspectRatio: false,
             parsing: {
               xAxisKey: keys.x,
               yAxisKey: keys.y
@@ -363,9 +425,14 @@ function keyIcon(k: string) {
               }
             }
           }"
-      /></ChartDownload>
+        />
+      </ChartDownload>
     </div>
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.explainer > span {
+  @apply font-bold;
+}
+</style>
