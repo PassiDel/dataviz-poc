@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { degreeIcon, faculties } from '@/data';
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     right?: boolean;
     selectedFaculty?: number;
@@ -100,6 +100,7 @@ const selected = defineModel('selected', { default: 0 });
 </template>
 
 <style scoped>
+/*noinspection CssUnusedSymbol*/
 .test {
   @apply text-white;
   background: linear-gradient(to right, rgb(10, 85, 140), rgb(50, 180, 200));
