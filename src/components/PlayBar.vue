@@ -17,7 +17,6 @@ const running = computed({
   },
   set(newValue) {
     if (newValue) {
-      selected.value = props.years[0];
       interval.value = setInterval(() => {
         const currentIndex = props.years.indexOf(selected.value || 'WiSe1000');
         if (currentIndex >= props.years.length - 1) {
@@ -26,7 +25,7 @@ const running = computed({
         }
 
         selected.value = props.years[currentIndex + 1];
-      }, 1500);
+      }, 1000);
     } else {
       clearInterval(interval.value);
       interval.value = -1;

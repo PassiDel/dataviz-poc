@@ -4,101 +4,19 @@ import { Pie } from 'vue-chartjs';
 import {
   ArcElement,
   Chart as ChartJS,
-  type ChartOptions,
   Legend,
+  SubTitle,
   Title,
   Tooltip
 } from 'chart.js';
-import { ref } from 'vue';
 import ChartDownload from '@/components/ChartDownload.vue';
 import { BACKGROUND_COLORS, BORDER_COLORS } from '@/utils/HSBColors';
 
-ChartJS.register(ArcElement, Tooltip, Legend, Title);
+ChartJS.register(ArcElement, Tooltip, Legend, Title, SubTitle);
 defineProps<{
   degree: DegreeData;
   year?: Semester;
 }>();
-
-const chartOptions = ref({
-  responsive: true,
-  plugins: {
-    legend: {
-      labels: {
-        boxWidth: 12,
-        boxHeight: 12,
-        color: 'black',
-        font: {
-          size: 15
-        },
-        generateLabels: function (chart) {
-          // Get the default label list
-          const original =
-            ChartJS.overrides.pie.plugins.legend.labels.generateLabels;
-          const labelsOriginal = original.call(this, chart);
-
-          // Build an array of colors used in the datasets of the chart
-          const datasetColors: string[] = chart.data.datasets
-            .map(function (e) {
-              return e.backgroundColor;
-            })
-            .flat() as any;
-
-          // Modify the color and hide state of each label
-          labelsOriginal.forEach((label) => {
-            // There are twice as many labels as there are datasets. This converts the label index into the corresponding dataset index
-            label.datasetIndex = label.index!! > 1 ? 1 : 0;
-
-            // The hidden state must match the dataset's hidden state
-            label.hidden = !chart.isDatasetVisible(label.datasetIndex);
-
-            // Change the color to match the dataset
-            label.fillStyle = datasetColors[label.index || 0];
-          });
-
-          return labelsOriginal.filter(
-            (l) => l.datasetIndex === 0 || (l.index || 0) < 5
-          );
-        }
-      },
-      onClick: function (_, legendItem, legend) {
-        // toggle the visibility of the dataset from what it currently is
-        legend.chart.getDatasetMeta(legendItem.datasetIndex || 0).hidden =
-          legend.chart.isDatasetVisible(legendItem.datasetIndex || 0);
-        legend.chart.update();
-      }
-    },
-    tooltip: {
-      callbacks: {
-        label: function (context) {
-          const labelIndex = context.datasetIndex * 2 + context.dataIndex;
-          return (
-            context.chart.data.labels?.[labelIndex] +
-            ': ' +
-            (context.raw as number).toLocaleString('de')
-          );
-        },
-        title: function (context): string {
-          if (context[0].datasetIndex === 0) {
-            return context[0].chart.data.labels?.[context[0].dataIndex] as any;
-          }
-          return context[0].dataIndex > 2 ? 'Ausländisch' : 'Deutsch';
-        }
-      }
-    },
-    title: {
-      display: true,
-      text: 'Geschlechterverteilung nach Herkunft',
-      padding: {
-        top: 20,
-        bottom: 10
-      },
-      font: {
-        size: 20
-      },
-      color: 'black'
-    }
-  }
-} satisfies ChartOptions<'pie'>);
 
 function dataset(d: DegreeData, y: Semester = LATEST_YEAR) {
   const semester = d.semester.find((s) => s.semester === y);
@@ -138,7 +56,95 @@ function dataset(d: DegreeData, y: Semester = LATEST_YEAR) {
 <template>
   <ChartDownload>
     <Pie
-      :options="chartOptions"
+      :options="{
+        responsive: true,
+        animation: {
+          animateRotate: false
+        },
+        plugins: {
+          legend: {
+            labels: {
+              boxWidth: 12,
+              boxHeight: 12,
+              color: 'black',
+              font: {
+                size: 15
+              },
+              generateLabels: function (chart) {
+                // Get the default label list
+                const original =
+                  ChartJS.overrides.pie.plugins.legend.labels.generateLabels;
+                const labelsOriginal = original.call(this, chart);
+
+                // Build an array of colors used in the datasets of the chart
+                const datasetColors: string[] = chart.data.datasets
+                  .map(function (e) {
+                    return e.backgroundColor;
+                  })
+                  .flat() as any;
+
+                // Modify the color and hide state of each label
+                labelsOriginal.forEach((label) => {
+                  // There are twice as many labels as there are datasets. This converts the label index into the corresponding dataset index
+                  label.datasetIndex = label.index!! > 1 ? 1 : 0;
+
+                  // The hidden state must match the dataset's hidden state
+                  label.hidden = !chart.isDatasetVisible(label.datasetIndex);
+
+                  // Change the color to match the dataset
+                  label.fillStyle = datasetColors[label.index || 0];
+                });
+
+                return labelsOriginal.filter(
+                  (l) => l.datasetIndex === 0 || (l.index || 0) < 5
+                );
+              }
+            },
+            onClick: function (_, legendItem, legend) {
+              // toggle the visibility of the dataset from what it currently is
+              legend.chart.getDatasetMeta(legendItem.datasetIndex || 0).hidden =
+                legend.chart.isDatasetVisible(legendItem.datasetIndex || 0);
+              legend.chart.update();
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                const labelIndex = context.datasetIndex * 2 + context.dataIndex;
+                return (
+                  context.chart.data.labels?.[labelIndex] +
+                  ': ' +
+                  (context.raw as number).toLocaleString('de')
+                );
+              },
+              title: function (context): string {
+                if (context[0].datasetIndex === 0) {
+                  return context[0].chart.data.labels?.[
+                    context[0].dataIndex
+                  ] as any;
+                }
+                return context[0].dataIndex > 2 ? 'Ausländisch' : 'Deutsch';
+              }
+            }
+          },
+          title: {
+            display: true,
+            text: 'Geschlechterverteilung nach Herkunft',
+            padding: {
+              top: 20,
+              bottom: 10
+            },
+            font: {
+              size: 20
+            },
+            color: 'black'
+          },
+          subtitle: {
+            display: !!year,
+            text: year
+          }
+        }
+      }"
       :data="{
         labels: [
           'Deutsch',

@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import DataSelect from '@/components/DataSelect.vue';
 import { computed, ref } from 'vue';
-import { degrees, faculties, type Semester, sumDegreesAllYears } from '@/data';
+import {
+  degrees,
+  faculties,
+  LATEST_YEAR,
+  type Semester,
+  sumDegreesAllYears
+} from '@/data';
 import { useQuery } from '@/composables/useQuery';
 import { getSemesterFromDegrees } from '@/utils/semester';
 import CompareFaculty from '@/components/CompareFaculty.vue';
@@ -40,11 +46,12 @@ const years = computed<Semester[]>(() =>
     leftDegree.value,
     rightDegree.value,
     ...(leftFaculty.value?.degrees ?? []),
-    ...(rightFaculty.value?.degrees ?? [])
+    ...(rightFaculty.value?.degrees ?? []),
+    ...(left.value === -1 || right.value === -1 ? [hsb] : [])
   )
 );
 
-const year = ref<Semester>(years.value[years.value.length - 1]);
+const year = ref<Semester>(LATEST_YEAR);
 </script>
 
 <template>
