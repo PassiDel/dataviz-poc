@@ -2,7 +2,9 @@
 import { getCurrentInstance, inject, onMounted, ref } from 'vue';
 import { HIDE_BUTTONS } from '@/symbols';
 import { useToast } from 'vuestic-ui';
+import { Chart as ChartJS } from 'chart.js';
 
+ChartJS.defaults.font.family = 'Zilla Slab';
 const instance = getCurrentInstance();
 
 withDefaults(
