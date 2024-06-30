@@ -192,6 +192,12 @@ function keyIcon(k: string) {
   if (k.includes('diverse')) {
     return 'custom-diverse';
   }
+  if (k === 'faculty') {
+    return 'home';
+  }
+  if (k === 'number') {
+    return 'tag';
+  }
 
   return '';
 }
@@ -395,9 +401,9 @@ function keyIcon(k: string) {
                       return '';
                     }
                     return [
-                      `FK: ${degree.fak}`,
-                      `Art: ${degree.type}`,
-                      `Campus: ${campusMap(degree.campus)}`
+                      `Fakultät: ${degree.fak}`,
+                      `Abschlussart: ${degree.type}`,
+                      `Standort: ${campusMap(degree.campus)}`
                     ];
                   }
                 }

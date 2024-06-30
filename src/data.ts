@@ -124,23 +124,22 @@ export const categoryExplainerMap: { [k in SemesterDataCategories]: string } = {
   totalGerman: 'deutscher Studierenden',
   maleGerman: 'deutscher Studenten',
   femaleGerman: 'deutscher Studentinnen',
-  diverseGerman: 'deutscher Student*innen',
+  diverseGerman: 'deutscher Student:innen (divers)',
 
   totalForeign: 'ausländischer Studierenden',
   maleForeign: 'ausländischer Studenten',
   femaleForeign: 'ausländischer Studentinnen',
-  diverseForeign: 'ausländischer Student*innen',
+  diverseForeign: 'ausländischer Student:innen (divers)',
 
   totalPause: 'beurlaubter Studierenden',
   malePause: 'beurlaubter Studenten',
   femalePause: 'beurlaubter Studentinnen',
-  diversePause: 'beurlaubter Student*innen',
+  diversePause: 'beurlaubter Student:innen (divers)',
 
-  // TODO: better word
   totalBeginner: 'Studienanfänger',
   maleBeginner: 'Studienanfänger',
   femaleBeginner: 'Studienanfängerinnen',
-  diverseBeginner: 'Studienanfänger*innen'
+  diverseBeginner: 'Studienanfänger:innen (divers)'
 };
 export const degreeKeyMap: {
   [k in keyof Omit<DegreeData, 'semester'>]: string;
@@ -150,8 +149,8 @@ export const degreeKeyMap: {
   short: 'Kurzbezeichnung',
   faculty: 'Fakultät',
   fak: '(Sub-)Fakultät',
-  campus: 'Campus',
-  type: 'Art'
+  campus: 'Standort',
+  type: 'Abschlussart'
 };
 
 const GenderNationalityKeys = [
