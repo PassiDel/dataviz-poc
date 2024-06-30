@@ -30,8 +30,10 @@ const selectRight = ref(0);
 
 <template>
   <h1 class="my-5 w-full text-center text-3xl">Die Hochschule in Zahlen!</h1>
-  <div class="flex h-fit grid-cols-5 flex-col gap-3 p-3 md:grid">
-    <div class="column col-start-2">
+  <div
+    class="md:min-h-1/2 mb-8 flex w-full grid-cols-4 flex-col items-center gap-3 p-3 md:mx-auto md:grid md:max-h-[50dvh] md:w-[80dvw] md:items-stretch"
+  >
+    <div class="column flex justify-center">
       <GenderNationality :degree="degree" />
     </div>
     <div class="column flex flex-col gap-3">
@@ -62,7 +64,7 @@ const selectRight = ref(0);
         <DegreeType :type="type.type" class="mr-auto" />
       </span>
     </div>
-    <div class="column">
+    <div class="column col-span-2">
       <HSBBarDegrees />
     </div>
   </div>
@@ -82,6 +84,9 @@ const selectRight = ref(0);
 </template>
 
 <style scoped>
+h3 {
+  @apply mt-3 text-xl font-bold;
+}
 .column {
   @apply rounded-2xl bg-gray-200 p-3;
 }
