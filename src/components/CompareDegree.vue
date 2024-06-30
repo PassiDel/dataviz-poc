@@ -36,8 +36,9 @@ defineProps<{
       <p>
         Erfasster Zeitraum:<br />
         <span v-if="degree.semester.length > 1"
-          >{{ degree.semester[degree.semester.length - 1].semester }} -
-          {{ degree.semester[0].semester }}</span
+          >{{ degree.semester[degree.semester.length - 1].semester }}–{{
+            degree.semester[0].semester
+          }}</span
         >
         <span v-else-if="degree.semester.length === 1">{{
           degree.semester[0].semester
