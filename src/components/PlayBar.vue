@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue';
-import type { Semester } from '@/data';
+import { renderSemester, type Semester } from '@/data';
 import { useBreakpoint } from 'vuestic-ui';
 
 const props = defineProps<{
@@ -46,7 +46,7 @@ onUnmounted(() => clearInterval(interval.value));
       :max="years.length - 1"
       track-label-visible
       pins
-      :track-label="(v) => years[v]"
+      :track-label="(v) => renderSemester(years[v])"
     >
       <template #label>
         <VaButton
@@ -57,12 +57,12 @@ onUnmounted(() => clearInterval(interval.value));
       /></template>
       <template #prepend>
         <VaChip size="small" v-if="breakpoint.mdUp">
-          {{ years[0] }}
+          {{ renderSemester(years[0]) }}
         </VaChip>
       </template>
       <template #append>
         <VaChip size="small" v-if="breakpoint.mdUp">
-          {{ years[years.length - 1] }}
+          {{ renderSemester(years[years.length - 1]) }}
         </VaChip>
       </template>
     </VaSlider>

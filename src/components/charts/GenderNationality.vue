@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { type DegreeData, LATEST_YEAR, type Semester } from '@/data';
+import {
+  type DegreeData,
+  LATEST_YEAR,
+  renderSemester,
+  type Semester
+} from '@/data';
 import { Pie } from 'vue-chartjs';
 import {
   ArcElement,
@@ -141,7 +146,7 @@ function dataset(d: DegreeData, y: Semester = LATEST_YEAR) {
           },
           subtitle: {
             display: !!year,
-            text: year
+            text: renderSemester(year)
           }
         }
       }"

@@ -304,3 +304,9 @@ export function degreeIcon(degree: DegreeData) {
   }
   return degree.semester.length > 2 ? `_` : 'crib';
 }
+
+export function renderSemester(semester: Semester | null | undefined) {
+  if (!semester) return '';
+
+  return `${semester.substring(0, 4)}\xa0${semester.substring(4, 8)}`;
+}

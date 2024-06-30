@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { campusMap, type DegreeData, type Semester } from '@/data';
+import {
+  campusMap,
+  type DegreeData,
+  renderSemester,
+  type Semester
+} from '@/data';
 import GenderNationality from '@/components/charts/GenderNationality.vue';
 import DegreeType from '@/components/DegreeType.vue';
 import DegreeHistoryGender from '@/components/charts/DegreeHistoryGender.vue';
@@ -36,17 +41,19 @@ defineProps<{
       <p>
         Erfasster Zeitraum:<br />
         <span v-if="degree.semester.length > 1"
-          >{{ degree.semester[degree.semester.length - 1].semester }}–{{
-            degree.semester[0].semester
-          }}</span
+          >{{
+            renderSemester(
+              degree.semester[degree.semester.length - 1].semester
+            )
+          }}–{{ renderSemester(degree.semester[0].semester) }}</span
         >
         <span v-else-if="degree.semester.length === 1">{{
-          degree.semester[0].semester
+          renderSemester(degree.semester[0].semester)
         }}</span>
         <br />({{ degree.semester.length }} Semester)
       </p>
       <p>
-        Anzahl Studis ({{ year }}):
+        Anzahl Studis ({{ renderSemester(year) }}):
         <span class="float-right">{{
           degree.semester
             .find((s) => s.semester === year)

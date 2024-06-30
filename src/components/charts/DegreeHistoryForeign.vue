@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { categoryMap, type DegreeData, type Semester } from '@/data';
+import {
+  categoryMap,
+  type DegreeData,
+  renderSemester,
+  type Semester
+} from '@/data';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -108,7 +113,7 @@ watch(props, () => {
         ref="line"
         :options="chartOptions"
         :data="{
-          labels: semster.map((s) => s.semester),
+          labels: semster.map((s) => renderSemester(s.semester)),
           datasets: [
             {
               label: 'Insgesamt',
