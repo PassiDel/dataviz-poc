@@ -14,7 +14,10 @@ const colors = {
 </script>
 
 <template>
-  <VaChip :color="colors[type]" outline
+  <VaChip
+    :color="colors[type]"
+    outline
+    style="--va-chip-hover-opacity: 1; background: none"
     ><slot
       ><span class="text-black">{{ type }}</span></slot
     ></VaChip
