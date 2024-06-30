@@ -31,9 +31,9 @@ const selectRight = ref(0);
 <template>
   <h1 class="my-5 w-full text-center text-3xl">Die Hochschule in Zahlen!</h1>
   <div
-    class="md:min-h-1/2 mb-8 flex w-full grid-cols-4 flex-col items-center gap-3 p-3 md:mx-auto md:grid md:max-h-[50dvh] md:w-[80dvw] md:items-stretch"
+    class="md:min-h-1/2 mb-8 flex w-full grid-cols-5 flex-col items-center gap-3 p-3 md:mx-auto md:grid md:w-[80dvw] md:items-stretch"
   >
-    <div class="column flex justify-center">
+    <div class="column col-span-2 flex justify-center">
       <GenderNationality :degree="degree" />
     </div>
     <div class="column flex flex-col gap-3">
@@ -71,12 +71,12 @@ const selectRight = ref(0);
   <div
     class="mx-auto mt-4 flex w-fit flex-col items-center gap-2 text-2xl md:block"
   >
-    Vergleiche
     <AnimatedSelection v-model:selected="selectLeft" :options="options" />
-    mit
+    verglichen mit
     <AnimatedSelection v-model:selected="selectRight" :options="options" />
     <VaButton
       icon="open_in_new"
+      title="Vergleiche!"
       class="mb-12 w-24 md:ml-4"
       :to="`/compare?left=${selectLeft}&right=${selectRight}`"
     />

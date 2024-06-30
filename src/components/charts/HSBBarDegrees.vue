@@ -106,7 +106,7 @@ function valueToData(value: number, faculty: number) {
 </script>
 
 <template>
-  <div class="h-[400px] max-w-[90dvw]">
+  <div class="h-full min-h-[400px] max-w-[90dvw]">
     <ChartDownload>
       <Bar
         :options="chartOptions"
