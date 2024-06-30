@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 import { ref } from 'vue';
 import ChartDownload from '@/components/ChartDownload.vue';
-import { BORDER_COLORS } from '@/utils/HSBColors';
+import { BACKGROUND_COLORS, BORDER_COLORS } from '@/utils/HSBColors';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 defineProps<{
@@ -56,7 +56,7 @@ const chartOptions = ref({
           });
 
           return labelsOriginal.filter(
-            (l) => l.datasetIndex === 0 || (l.index || 0) % 2 === 0
+            (l) => l.datasetIndex === 0 || (l.index || 0) < 5
           );
         }
       },
@@ -126,9 +126,9 @@ function dataset(d: DegreeData, y: Semester = LATEST_YEAR) {
         BORDER_COLORS[6],
         BORDER_COLORS[0],
         BORDER_COLORS[2],
-        BORDER_COLORS[2],
-        BORDER_COLORS[0],
-        BORDER_COLORS[6]
+        BACKGROUND_COLORS[2],
+        BACKGROUND_COLORS[0],
+        BACKGROUND_COLORS[6]
       ]
     }
   ];
