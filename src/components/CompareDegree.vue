@@ -47,18 +47,18 @@ defineProps<{
       </p>
       <p>
         Anzahl Studis ({{ year }}):
-        {{
+        <span class="float-right">{{
           degree.semester
             .find((s) => s.semester === year)
             ?.data?.total?.toLocaleString('de') || 0
-        }}
+        }}</span>
         <br />
         Anzahl Studienanfänger:
-        {{
+        <span class="float-right">{{
           degree.semester
             .find((s) => s.semester === year)
             ?.data?.totalBeginner?.toLocaleString('de') || 0
-        }}
+        }}</span>
       </p>
     </div>
     <hr class="h-0.5 bg-primary" />
