@@ -12,8 +12,8 @@ import {
   Title,
   Tooltip
 } from 'chart.js';
-import { type DegreeData, degrees, LATEST_YEAR } from '@/data';
-import HSBColors from '@/utils/HSBColors';
+import { type DegreeData, faculties, LATEST_YEAR } from '@/data';
+import HSBColors, { BACKGROUND_COLORS, BORDER_COLORS } from '@/utils/HSBColors';
 
 ChartJS.register(
   CategoryScale,
@@ -30,25 +30,34 @@ const chartOptions = ref({
   plugins: {
     title: {
       display: true,
-      text: 'Anzahl Studis pro Studiengang pro Fakultät'
+      text: 'Anzahl Studis pro Studiengang pro Fakultät',
+      padding: {
+        top: 20,
+        bottom: 10
+      },
+      font: {
+        size: 20
+      },
+      color: 'black'
     },
     legend: {
       display: false
     },
     tooltip: {
-      callbacks: {
-        title: function (context): string {
-          return `Fakultät ${context[0].label}`;
-        }
-      }
+      yAlign: 'bottom'
     }
   },
   scales: {
     x: {
       stacked: true,
       title: {
-        display: true,
-        text: 'Fakultät'
+        display: false
+      },
+      ticks: {
+        font: {
+          size: 15
+        },
+        color: 'black'
       }
     },
     y: {
@@ -56,7 +65,11 @@ const chartOptions = ref({
       ticks: {
         callback(tickValue) {
           return tickValue.toLocaleString('de');
-        }
+        },
+        font: {
+          size: 15
+        },
+        color: 'black'
       }
     }
   }
@@ -67,30 +80,43 @@ function getTotalStudents(degree: DegreeData) {
     degree.semester.find((s) => s.semester === LATEST_YEAR)?.data?.total || 0
   );
 }
+const datasets = [...faculties].flatMap((f) => {
+  const degrees = f.degrees.map((d) => ({
+    name: d.name,
+    value: getTotalStudents(d)
+  }));
 
-function degreeToData(degree: DegreeData) {
-  const data = new Array(5).fill(0);
-  data[degree.faculty - 1] = getTotalStudents(degree);
+  degrees.sort((a, b) => b.value - a.value);
+
+  return degrees.map((d, i) => ({
+    label: d.name,
+    data: valueToData(d.value, f.number),
+    backgroundColor:
+      i % 2 === 0
+        ? BORDER_COLORS[f.number - 1]
+        : BACKGROUND_COLORS[f.number - 1]
+  }));
+});
+
+function valueToData(value: number, faculty: number) {
+  const data: number[] = new Array(5).fill(0);
+  data[faculty - 1] = value;
   return data;
 }
-// const campus = ['WS', 'IG', 'ZI', 'NW', 'HÖ'];
 </script>
 
 <template>
-  <ChartDownload>
-    <Bar
-      :options="chartOptions"
-      :data="{
-        labels: [1, 2, 3, 4, 5],
-        datasets: degrees.map((d) => ({
-          label: d.name,
-          data: degreeToData(d),
-          order: -getTotalStudents(d)
-          // backgroundColor: BORDER_COLORS[campus.indexOf(d.campus) || 0]
-        }))
-      }"
-    ></Bar>
-  </ChartDownload>
+  <div class="h-full min-h-[400px] max-w-[90dvw]">
+    <ChartDownload>
+      <Bar
+        :options="chartOptions"
+        :data="{
+          labels: [1, 2, 3, 4, 5].map((n) => `Fakultät ${n}`),
+          datasets: datasets
+        }"
+      />
+    </ChartDownload>
+  </div>
 </template>
 
 <style scoped></style>

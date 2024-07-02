@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { categoryMap, type DegreeData, type Semester } from '@/data';
+import {
+  categoryMap,
+  type DegreeData,
+  renderSemester,
+  type Semester
+} from '@/data';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -39,6 +44,7 @@ const semster = computed(() => sortSemesterData(props.degree.semester));
 
 const chartOptions = computed<ChartOptions<'line'>>(() => ({
   responsive: true,
+  maintainAspectRatio: false,
   interaction: {
     axis: 'xy',
     mode: 'index'
@@ -70,7 +76,25 @@ const chartOptions = computed<ChartOptions<'line'>>(() => ({
     },
     title: {
       display: true,
-      text: 'Anzahl Studis nach Herkunft über Semester'
+      text: 'Anzahl Studis nach Herkunft über Semester',
+      padding: {
+        top: 20,
+        bottom: 10
+      },
+      font: {
+        size: 20
+      },
+      color: 'black'
+    },
+    legend: {
+      labels: {
+        boxWidth: 12,
+        boxHeight: 12,
+        color: 'black',
+        font: {
+          size: 15
+        }
+      }
     }
   }
 }));
@@ -83,34 +107,36 @@ watch(props, () => {
 </script>
 
 <template>
-  <ChartDownload>
-    <Line
-      ref="line"
-      :options="chartOptions"
-      :data="{
-        labels: semster.map((s) => s.semester),
-        datasets: [
-          {
-            label: 'Insgesamt',
-            data: semster.map((s) => s.data.total || 0),
-            backgroundColor: BACKGROUND_COLORS[7],
-            borderColor: BORDER_COLORS[7]
-          },
-          {
-            label: categoryMap.totalForeign,
-            data: semster.map((s) => s.data.totalForeign || 0),
-            backgroundColor: BACKGROUND_COLORS[6],
-            borderColor: BORDER_COLORS[6]
-          },
-          {
-            label: categoryMap.totalGerman,
-            data: semster.map((s) => s.data.totalGerman || 0),
-            backgroundColor: BACKGROUND_COLORS[0],
-            borderColor: BORDER_COLORS[0]
-          }
-        ]
-      }"
-  /></ChartDownload>
+  <div class="h-[400px] pb-12">
+    <ChartDownload>
+      <Line
+        ref="line"
+        :options="chartOptions"
+        :data="{
+          labels: semster.map((s) => renderSemester(s.semester)),
+          datasets: [
+            {
+              label: 'Insgesamt',
+              data: semster.map((s) => s.data.total || 0),
+              backgroundColor: BACKGROUND_COLORS[7],
+              borderColor: BORDER_COLORS[7]
+            },
+            {
+              label: categoryMap.totalForeign,
+              data: semster.map((s) => s.data.totalForeign || 0),
+              backgroundColor: BACKGROUND_COLORS[6],
+              borderColor: BORDER_COLORS[6]
+            },
+            {
+              label: categoryMap.totalGerman,
+              data: semster.map((s) => s.data.totalGerman || 0),
+              backgroundColor: BACKGROUND_COLORS[0],
+              borderColor: BORDER_COLORS[0]
+            }
+          ]
+        }"
+    /></ChartDownload>
+  </div>
 </template>
 
 <style scoped></style>

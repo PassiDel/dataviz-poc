@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue';
-import type { Semester } from '@/data';
+import { renderSemester, type Semester } from '@/data';
+import { useBreakpoint } from 'vuestic-ui';
 
 const props = defineProps<{
   years: Semester[];
 }>();
+
+const breakpoint = useBreakpoint();
 
 let interval = ref(-1);
 const selected = defineModel<Semester>();
@@ -14,7 +17,6 @@ const running = computed({
   },
   set(newValue) {
     if (newValue) {
-      selected.value = props.years[0];
       interval.value = setInterval(() => {
         const currentIndex = props.years.indexOf(selected.value || 'WiSe1000');
         if (currentIndex >= props.years.length - 1) {
@@ -23,7 +25,7 @@ const running = computed({
         }
 
         selected.value = props.years[currentIndex + 1];
-      }, 1500);
+      }, 1000);
     } else {
       clearInterval(interval.value);
       interval.value = -1;
@@ -38,12 +40,13 @@ onUnmounted(() => clearInterval(interval.value));
     class="fixed bottom-3 left-0 right-0 mx-2 rounded-2xl bg-gray-400 p-3 text-white md:mx-auto md:w-3/6"
   >
     <VaSlider
+      color="textInverted"
       :model-value="Math.max(years.indexOf(selected || 'WiSe1000'), 0)"
       @update:modelValue="(newValue) => (selected = years[newValue])"
       :max="years.length - 1"
       track-label-visible
       pins
-      :track-label="(v) => years[v]"
+      :track-label="(v) => renderSemester(years[v])"
     >
       <template #label>
         <VaButton
@@ -53,13 +56,13 @@ onUnmounted(() => clearInterval(interval.value));
           @click="() => (running = !running)"
       /></template>
       <template #prepend>
-        <VaChip color="warning" size="small">
-          {{ years[0] }}
+        <VaChip size="small" v-if="breakpoint.mdUp">
+          {{ renderSemester(years[0]) }}
         </VaChip>
       </template>
       <template #append>
-        <VaChip color="warning" size="small">
-          {{ years[years.length - 1] }}
+        <VaChip size="small" v-if="breakpoint.mdUp">
+          {{ renderSemester(years[years.length - 1]) }}
         </VaChip>
       </template>
     </VaSlider>

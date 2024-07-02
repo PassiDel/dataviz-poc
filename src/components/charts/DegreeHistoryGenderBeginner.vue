@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  categoryMap,
-  cateogryExtra,
-  type DegreeData,
-  renderSemester,
-  type Semester
-} from '@/data';
+import { categoryMap, type DegreeData, type Semester } from '@/data';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -22,7 +16,7 @@ import { Line } from 'vue-chartjs';
 import { computed, nextTick, ref, watch } from 'vue';
 import ChartDownload from '@/components/ChartDownload.vue';
 import HSBColors, { BACKGROUND_COLORS, BORDER_COLORS } from '@/utils/HSBColors';
-import { sortSemesterData } from '@/utils/semester';
+import { sortSemesterData, sumYears } from '@/utils/semester';
 
 ChartJS.register(
   CategoryScale,
@@ -41,7 +35,9 @@ const props = defineProps<{
   year?: Semester;
 }>();
 
-const semster = computed(() => sortSemesterData(props.degree.semester));
+const semester = computed(() =>
+  sumYears(sortSemesterData(props.degree.semester))
+);
 
 const chartOptions = computed<ChartOptions<'line'>>(() => ({
   responsive: true,
@@ -53,7 +49,11 @@ const chartOptions = computed<ChartOptions<'line'>>(() => ({
   elements: {
     point: {
       radius(ctx) {
-        return semster.value[ctx.parsed.x]?.semester === props.year ? 6 : 3;
+        return semester.value[ctx.parsed.x]?.semester.endsWith(
+          props.year?.substring(4) || ''
+        )
+          ? 6
+          : 3;
       }
     }
   },
@@ -62,8 +62,12 @@ const chartOptions = computed<ChartOptions<'line'>>(() => ({
       annotations: {
         line1: {
           type: 'line',
-          xMin: semster.value.findIndex((s) => s.semester === props.year),
-          xMax: semster.value.findIndex((s) => s.semester === props.year),
+          xMin: semester.value.findIndex((s) =>
+            s.semester.endsWith(props.year?.substring(4) || '')
+          ),
+          xMax: semester.value.findIndex((s) =>
+            s.semester.endsWith(props.year?.substring(4) || '')
+          ),
           borderWidth: 15,
           borderColor: 'rgba(265, 265, 265, 0.4)',
           drawTime: 'beforeDatasetsDraw'
@@ -72,7 +76,7 @@ const chartOptions = computed<ChartOptions<'line'>>(() => ({
     },
     title: {
       display: true,
-      text: 'Anzahl Studis nach Geschlecht über Semester',
+      text: 'Anzahl Studienanfänger nach Geschlecht über Jahr',
       padding: {
         top: 20,
         bottom: 10
@@ -109,42 +113,36 @@ watch(props, () => {
         ref="line"
         :options="chartOptions"
         :data="{
-          labels: semster.map((s) => renderSemester(s.semester)),
+          labels: semester.map((s) => s.semester.substring(4)),
           datasets: [
             {
               label: 'Insgesamt',
-              data: semster.map((s) => s.data.total || 0),
+              data: semester.map((s) => s.data.totalBeginner || 0),
               backgroundColor: BACKGROUND_COLORS[7],
               borderColor: BORDER_COLORS[7]
             },
             {
-              label: cateogryExtra.female,
-              data: semster.map(
-                (s) => (s.data.femaleGerman || 0) + (s.data.femaleForeign || 0)
-              ),
+              label: categoryMap.femaleBeginner,
+              data: semester.map((s) => s.data.femaleBeginner || 0),
               backgroundColor: BACKGROUND_COLORS[6],
               borderColor: BORDER_COLORS[6]
             },
             {
-              label: cateogryExtra.male,
-              data: semster.map(
-                (s) => (s.data.maleGerman || 0) + (s.data.maleForeign || 0)
-              ),
+              label: categoryMap.maleBeginner,
+              data: semester.map((s) => s.data.maleBeginner || 0),
               backgroundColor: BACKGROUND_COLORS[0],
               borderColor: BORDER_COLORS[0]
             },
             {
-              label: cateogryExtra.diverse,
-              data: semster.map(
-                (s) =>
-                  (s.data.diverseGerman || 0) + (s.data.diverseForeign || 0)
-              ),
+              label: categoryMap.diverseBeginner,
+              data: semester.map((s) => s.data.diverseBeginner || 0),
               backgroundColor: BACKGROUND_COLORS[2],
               borderColor: BORDER_COLORS[2]
             }
           ]
         }"
-    /></ChartDownload>
+      />
+    </ChartDownload>
   </div>
 </template>
 

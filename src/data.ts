@@ -100,34 +100,63 @@ export function campusMap(short: string, returnNWAsDefault = true) {
 }
 
 export const categoryMap: { [k in SemesterDataCategories]: string } = {
-  total: 'Insgesamt',
-  totalGerman: 'Insgesamt Deutsch',
+  total: 'Studierende',
+  totalGerman: 'Studierende Deutsch',
   maleGerman: 'Deutsch Männlich',
   femaleGerman: 'Deutsch Weiblich',
   diverseGerman: 'Deutsch Divers',
-  totalForeign: 'Insgesamt Ausländisch',
+  totalForeign: 'Studierende Ausländisch',
   maleForeign: 'Ausländisch Männlich',
   femaleForeign: 'Ausländisch Weiblich',
   diverseForeign: 'Ausländisch Divers',
-  totalPause: 'Insgesamt Urlaub',
+  totalPause: 'Studierende Urlaub',
   malePause: 'Urlaub Männlich',
   femalePause: 'Urlaub Weiblich',
   diversePause: 'Urlaub Divers',
-  totalBeginner: 'Insgesamt StuAnf',
-  maleBeginner: 'StuAnf Männlich',
-  femaleBeginner: 'StuAnf Weiblich',
-  diverseBeginner: 'StuAnf Divers'
+  totalBeginner: 'Studierende Studienanfänger',
+  maleBeginner: 'Studienanfänger Männlich',
+  femaleBeginner: 'Studienanfänger Weiblich',
+  diverseBeginner: 'Studienanfänger Divers'
+};
+
+export const cateogryExtra = {
+  male: 'Männlich',
+  female: 'Weiblich',
+  diverse: 'Divers'
+};
+export const categoryExplainerMap: { [k in SemesterDataCategories]: string } = {
+  total: 'aller Studierenden',
+
+  totalGerman: 'deutscher Studierenden',
+  maleGerman: 'deutscher Studenten',
+  femaleGerman: 'deutscher Studentinnen',
+  diverseGerman: 'deutscher Student:innen (divers)',
+
+  totalForeign: 'ausländischer Studierenden',
+  maleForeign: 'ausländischer Studenten',
+  femaleForeign: 'ausländischer Studentinnen',
+  diverseForeign: 'ausländischer Student:innen (divers)',
+
+  totalPause: 'beurlaubter Studierenden',
+  malePause: 'beurlaubter Studenten',
+  femalePause: 'beurlaubter Studentinnen',
+  diversePause: 'beurlaubter Student:innen (divers)',
+
+  totalBeginner: 'Studienanfänger',
+  maleBeginner: 'Studienanfänger',
+  femaleBeginner: 'Studienanfängerinnen',
+  diverseBeginner: 'Studienanfänger:innen (divers)'
 };
 export const degreeKeyMap: {
   [k in keyof Omit<DegreeData, 'semester'>]: string;
 } = {
-  number: 'Nummer',
+  number: 'Studiengangsnummer',
   name: 'Name',
-  short: 'Kurz',
+  short: 'Kurzbezeichnung',
   faculty: 'Fakultät',
   fak: '(Sub-)Fakultät',
-  campus: 'Campus',
-  type: 'Art'
+  campus: 'Standort',
+  type: 'Abschlussart'
 };
 
 const GenderNationalityKeys = [
@@ -149,7 +178,11 @@ const DegreeHistoryKeys = [
   'diverseGerman',
   'diverseForeign',
   'maleForeign',
-  'femaleForeign'
+  'femaleForeign',
+  'totalBeginner',
+  'maleBeginner',
+  'femaleBeginner',
+  'diverseBeginner'
 ] as const;
 
 export function sumDegrees(
@@ -211,7 +244,11 @@ export function sumDegreesAllYears(faculty: (typeof faculties)[0]): DegreeData {
               diverseGerman: 0,
               diverseForeign: 0,
               maleForeign: 0,
-              femaleForeign: 0
+              femaleForeign: 0,
+              totalBeginner: 0,
+              maleBeginner: 0,
+              femaleBeginner: 0,
+              diverseBeginner: 0
             }
           };
           fd.semester.push(year);
@@ -271,4 +308,10 @@ export function degreeIcon(degree: DegreeData) {
     return 'schedule';
   }
   return degree.semester.length > 2 ? `_` : 'crib';
+}
+
+export function renderSemester(semester: Semester | null | undefined) {
+  if (!semester) return '';
+
+  return `${semester.substring(0, 4)}\xa0${semester.substring(4, 8)}`;
 }

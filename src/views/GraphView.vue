@@ -14,14 +14,18 @@ import { Scatter } from 'vue-chartjs';
 import { computed, nextTick, ref, watch } from 'vue';
 import {
   campusMap,
+  categoryExplainerMap,
   categoryMap,
   type DegreeData,
+  degreeIcon,
   degreeKeyMap,
+  degrees,
   faculties,
   type SemesterDataCategories
 } from '@/data';
 import { useQuery } from '@/composables/useQuery';
 import HSBColors from '@/utils/HSBColors';
+import DegreeType from '@/components/DegreeType.vue';
 
 ChartJS.register(
   LinearScale,
@@ -33,13 +37,30 @@ ChartJS.register(
   Title
 );
 
+const highlightOptions = degrees.map(({ semester, ...d }) => ({
+  ...d,
+  icon: degreeIcon({ ...d, semester })
+}));
+
+highlightOptions.sort((a, b) => a.faculty - b.faculty);
+
 type Keys =
   | keyof Omit<DegreeData, 'semester'>
   | `semester.0.data.${SemesterDataCategories}`;
 
 type Groups = keyof Omit<DegreeData, 'semester' | 'short' | 'number' | 'name'>;
 
-const { group, x, y } = useQuery({ group: 'faculty' as Groups, x: 0, y: 2 });
+const dataOptions = [
+  { t: 'Studiengang', v: 'degree', e: 'ein Studiengang' },
+  { t: 'Fakultät', v: 'faculty', e: 'eine Fakultät' }
+];
+
+const { group, x, y, dataset } = useQuery({
+  group: 'faculty' as Groups,
+  x: 0,
+  y: 2,
+  dataset: 'degree'
+});
 
 const selectOptions = [
   'faculty',
@@ -61,13 +82,14 @@ const selectOptions = [
   'semester.0.data.maleBeginner',
   'semester.0.data.femaleBeginner',
   'semester.0.data.diverseBeginner'
-].map((o) => ({ v: o as Keys }));
+].map((o) => ({ v: o as Keys, icon: keyIcon(o) }));
 
 const keys = computed<{ x: Keys; y: Keys }>(() => ({
   x: selectOptions[x.value]?.v || selectOptions[0].v,
   y: selectOptions[y.value]?.v || selectOptions[2].v
 }));
 
+// TODO: add faculty as dataset
 const data = computed<ChartData<'scatter', DegreeData[]>>(() => ({
   datasets: faculties
     .flatMap((f) => f.degrees.map((d) => ({ ...d, _fName: f.name })))
@@ -96,22 +118,31 @@ const data = computed<ChartData<'scatter', DegreeData[]>>(() => ({
     )
 }));
 
-const groupOptions = ['faculty', 'fak', 'campus', 'type'].map((o) => ({
-  v: o,
-  t: degreeKeyMap[o as Groups]
-}));
-
-// TODO
-const dataOptions = ['Studiengang', 'Fakultät', 'HSB'].map((o) => ({
-  v: o,
-  t: o
-}));
+const groupOptions = [
+  { v: 'faculty', t: degreeKeyMap.faculty, e: 'die Fakultät' },
+  {
+    v: 'fak',
+    t: degreeKeyMap.fak,
+    e: 'die (Sub-)Fakultät'
+  },
+  {
+    v: 'campus',
+    t: degreeKeyMap.campus,
+    e: 'den Standort'
+  },
+  {
+    v: 'type',
+    t: degreeKeyMap.type,
+    e: 'die Abschlussart'
+  }
+];
 
 function keyLabel(key: Keys) {
   return key.startsWith('semester.0.data.')
     ? categoryMap[key.substring(16) as SemesterDataCategories]
     : degreeKeyMap[key as keyof typeof degreeKeyMap];
 }
+
 function label(degree: DegreeData, key: Keys) {
   const valueString = key.startsWith('semester.0.data.')
     ? degree.semester[0].data[key.substring(16) as SemesterDataCategories]
@@ -120,18 +151,100 @@ function label(degree: DegreeData, key: Keys) {
   return `${keyLabel(key)}: ${valueString}`;
 }
 
+// TODO: add highlights for faculty
+const highlight = ref<DegreeData[]>([]);
+
 const scatter = ref<{ chart: ChartJS }>();
 watch(keys, () => {
   // really rally ugly, but it works
   nextTick(() => scatter.value?.chart.update());
 });
+watch(highlight, () => {
+  // really rally ugly, but it works
+  nextTick(() => scatter.value?.chart.update());
+});
+
+function keyEmoji(k: string) {
+  switch (k.split(' ')[0]) {
+    case 'Deutsch':
+      return '🇩🇪 ';
+    case 'Ausländisch':
+      return '🌎 ';
+    case 'Urlaub':
+      return '🏖️ ';
+    case 'Studienanfänger':
+      return '👶 ';
+  }
+
+  return '';
+}
+
+function keyIcon(k: string) {
+  if (k.includes('total')) {
+    return 'person';
+  }
+  if (k.includes('female')) {
+    return 'custom-female';
+  }
+  if (k.includes('male')) {
+    return 'custom-male';
+  }
+  if (k.includes('diverse')) {
+    return 'custom-diverse';
+  }
+  if (k === 'faculty') {
+    return 'home';
+  }
+  if (k === 'number') {
+    return 'tag';
+  }
+
+  return '';
+}
 </script>
 
 <template>
   <main class="flex h-full grid-cols-4 flex-col gap-3 p-3 md:grid">
     <div class="flex h-fit flex-col gap-2">
+      <div class="explainer min-h-24">
+        Die Grafik zeigt die
+        <span>{{
+          keys.y.startsWith('semester')
+            ? `Anzahl ${
+                categoryExplainerMap[
+                  keys.y.substring(16) as SemesterDataCategories
+                ]
+              }`
+            : keyLabel(keys.y)
+        }}</span>
+        in Relation
+        <span>{{
+          keys.x.startsWith('semester')
+            ? `zur Anzahl ${
+                categoryExplainerMap[
+                  keys.x.substring(16) as SemesterDataCategories
+                ]
+              }`
+            : `zur ${keyLabel(keys.x)}`
+        }}</span
+        >. Jeder Kreis ist
+        <span>{{ dataOptions.find((d) => d.v === dataset)?.e }}</span> und die
+        Farben stehen für
+        <span>{{ groupOptions.find((g) => g.v === group)?.e }}</span
+        >. Hervorgehoben {{ highlight.length === 1 ? 'ist' : 'sind' }}
+        <span>{{ dataset === 'degree' ? highlight.length : 0 }}</span>
+        {{
+          dataset === 'degree'
+            ? highlight.length === 1
+              ? 'Studiengang'
+              : 'Studiengänge'
+            : highlight.length === 1
+              ? 'Fakultät'
+              : 'Fakultäten'
+        }}.
+      </div>
       <VaSelect
-        v-model="dataOptions[0].v"
+        v-model="dataset"
         label="Datensatz"
         :options="dataOptions"
         class="w-full"
@@ -158,7 +271,7 @@ watch(keys, () => {
         value-by="v"
         :group-by="
           (k: (typeof selectOptions)[0]) =>
-            k.v.startsWith('semester.0.data.') ? 'Daten' : 'Meta'
+            keyEmoji(keyLabel(k.v)) + keyLabel(k.v).split(' ')[0]
         "
         searchable
       />
@@ -174,25 +287,71 @@ watch(keys, () => {
         value-by="v"
         :group-by="
           (k: (typeof selectOptions)[0]) =>
-            k.v.startsWith('semester.0.data.') ? 'Daten' : 'Meta'
+            keyEmoji(keyLabel(k.v)) + keyLabel(k.v).split(' ')[0]
         "
         searchable
       />
+      <VaSelect
+        v-if="dataset === 'degree'"
+        v-model="highlight"
+        track-by="number"
+        text-by="name"
+        :group-by="(k: (typeof highlightOptions)[0]) => `Fakultät ${k.faculty}`"
+        label="Hervorheben"
+        placeholder="Studiengänge auswählen..."
+        :options="highlightOptions"
+        clearable
+        multiple
+        searchable
+      >
+        <template #content="{ value }">
+          <div class="flex flex-wrap">
+            <DegreeType
+              v-for="chip in value"
+              :key="chip"
+              :type="chip.type"
+              class="m-1"
+              ><span class="text-black"> {{ chip.short }}</span>
+            </DegreeType>
+          </div>
+        </template>
+      </VaSelect>
     </div>
-    <div class="overscroll-y-none md:col-span-3">
-      <ChartDownload
-        ><Scatter
+    <div class="mb-12 min-h-[50vh] overscroll-y-none md:col-span-3">
+      <ChartDownload>
+        <Scatter
           ref="scatter"
           :data="data as any"
           :options="{
             responsive: true,
+            maintainAspectRatio: false,
             parsing: {
               xAxisKey: keys.x,
               yAxisKey: keys.y
             },
             elements: {
               point: {
-                radius: 6
+                hoverRadius: 15,
+                pointStyle(ctx) {
+                  const deg =
+                    ctx.raw as (typeof data.value.datasets)[0]['data'][0];
+
+                  return (highlight as unknown as DegreeData[])?.some(
+                    (h) => h.number === deg.number
+                  )
+                    ? 'rectRounded'
+                    : 'circle';
+                },
+                radius(ctx) {
+                  const deg =
+                    ctx.raw as (typeof data.value.datasets)[0]['data'][0];
+
+                  return (highlight as unknown as DegreeData[])?.some(
+                    (h) => h.number === deg.number
+                  )
+                    ? 12
+                    : 6;
+                }
               }
             },
             scales: {
@@ -242,22 +401,44 @@ watch(keys, () => {
                       return '';
                     }
                     return [
-                      `FK: ${degree.fak}`,
-                      `Art: ${degree.type}`,
-                      `Campus: ${campusMap(degree.campus)}`
+                      `Fakultät: ${degree.fak}`,
+                      `Abschlussart: ${degree.type}`,
+                      `Standort: ${campusMap(degree.campus)}`
                     ];
                   }
                 }
               },
               title: {
                 display: true,
-                text: 'Alle Studiengänge'
+                text: 'Alle Studiengänge',
+                padding: {
+                  top: 20,
+                  bottom: 10
+                },
+                font: {
+                  size: 20
+                }
+              },
+              legend: {
+                labels: {
+                  boxWidth: 12,
+                  boxHeight: 12,
+                  color: 'black',
+                  font: {
+                    size: 15
+                  }
+                }
               }
             }
           }"
-      /></ChartDownload>
+        />
+      </ChartDownload>
     </div>
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.explainer > span {
+  @apply font-bold;
+}
+</style>
