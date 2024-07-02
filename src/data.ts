@@ -118,6 +118,12 @@ export const categoryMap: { [k in SemesterDataCategories]: string } = {
   femaleBeginner: 'Studienanfänger Weiblich',
   diverseBeginner: 'Studienanfänger Divers'
 };
+
+export const cateogryExtra = {
+  male: 'Männlich',
+  female: 'Weiblich',
+  diverse: 'Divers'
+};
 export const categoryExplainerMap: { [k in SemesterDataCategories]: string } = {
   total: 'aller Studierenden',
 

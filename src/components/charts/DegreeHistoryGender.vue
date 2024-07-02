@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   categoryMap,
+  cateogryExtra,
   type DegreeData,
   renderSemester,
   type Semester
@@ -117,20 +118,27 @@ watch(props, () => {
               borderColor: BORDER_COLORS[7]
             },
             {
-              label: categoryMap.femaleGerman,
-              data: semster.map((s) => s.data.femaleGerman || 0),
+              label: cateogryExtra.female,
+              data: semster.map(
+                (s) => (s.data.femaleGerman || 0) + (s.data.femaleForeign || 0)
+              ),
               backgroundColor: BACKGROUND_COLORS[6],
               borderColor: BORDER_COLORS[6]
             },
             {
-              label: categoryMap.maleGerman,
-              data: semster.map((s) => s.data.maleGerman || 0),
+              label: cateogryExtra.male,
+              data: semster.map(
+                (s) => (s.data.maleGerman || 0) + (s.data.maleForeign || 0)
+              ),
               backgroundColor: BACKGROUND_COLORS[0],
               borderColor: BORDER_COLORS[0]
             },
             {
-              label: categoryMap.diverseGerman,
-              data: semster.map((s) => s.data.diverseGerman || 0),
+              label: cateogryExtra.diverse,
+              data: semster.map(
+                (s) =>
+                  (s.data.diverseGerman || 0) + (s.data.diverseForeign || 0)
+              ),
               backgroundColor: BACKGROUND_COLORS[2],
               borderColor: BORDER_COLORS[2]
             }
