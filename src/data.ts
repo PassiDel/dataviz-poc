@@ -305,9 +305,9 @@ export function sumCalcDegrees(
 export function degreeIcon(degree: DegreeData) {
   const hasLatestYear = degree.semester.some((s) => s.semester === LATEST_YEAR);
   if (!hasLatestYear) {
-    return 'schedule';
+    return 'custom-old';
   }
-  return degree.semester.length > 2 ? `_` : 'crib';
+  return degree.semester.length > 2 ? `_` : 'custom-new';
 }
 
 export function renderSemester(semester: Semester | null | undefined) {
